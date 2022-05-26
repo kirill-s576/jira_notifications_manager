@@ -35,4 +35,4 @@ jobs:
         run: ssh-keyscan -H ${{ secrets.JB_SERVER_SSH_HOST }} >> ~/.ssh/known_hosts
       
       - name: Create a test folder
-        run: ssh ${{ secrets.JB_SERVER_SSH_HOST }} mkdir 123
+        run: ssh ${{ secrets.JB_SERVER_USERNAME }}@${{ secrets.JB_SERVER_SSH_HOST }} mkdir 123
