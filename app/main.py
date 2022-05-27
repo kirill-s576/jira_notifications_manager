@@ -3,7 +3,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
-from src.router import example
+from src.router import example, websocket_logger
 
 app = FastAPI()
 
@@ -23,6 +23,7 @@ templates = Jinja2Templates(directory="templates")
 
 # Include routers.
 app.include_router(example.router)
+app.include_router(websocket_logger.router)
 
 
 @app.get("/", response_class=HTMLResponse, include_in_schema=False)

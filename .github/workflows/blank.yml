@@ -16,7 +16,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  deploy:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -36,3 +36,9 @@ jobs:
       
       - name: Create a test folder
         run: ssh ${{ secrets.JB_SERVER_USERNAME }}@${{ secrets.JB_SERVER_SSH_HOST }} mkdir 123
+
+      - name: Pull repo on server
+        run: |
+          ssh ${{ secrets.JB_SERVER_USERNAME }}@${{ secrets.JB_SERVER_SSH_HOST }} mkdir -p /home/${{ secrets.JB_SERVER_USERNAME }}
+          ssh ${{ secrets.JB_SERVER_USERNAME }}@${{ secrets.JB_SERVER_SSH_HOST }} cd /home/${{ secrets.JB_SERVER_USERNAME }}/jira_notifications_manager && git pull origin main
+          ssh ${{ secrets.JB_SERVER_USERNAME }}@${{ secrets.JB_SERVER_SSH_HOST }} cd /home/${{ secrets.JB_SERVER_USERNAME }}/jira_notifications_manager && docker-compose up -d
