@@ -1,7 +1,7 @@
-from tkinter import E
-from typing import Callable, List, Coroutine, Any
+from typing import List
 from pydantic import BaseModel
-import asyncio
+from fastapi import WebSocket
+import uuid
 
 
 class BusMessage(BaseModel):
@@ -13,6 +13,16 @@ class AbstractAsyncBusMessageHandler:
 
     async def handle_message(self, message: BusMessage):
         raise NotImplementedError("Method must be implemented in child class")
+
+
+class WebsocketAsyncBusMessageHandler(AbstractAsyncBusMessageHandler):
+
+    def __init__(self, websocket: WebSocket) -> None:
+        self.websocket = websocket
+        super().__init__()
+
+    async def handle_message(self, message: BusMessage):
+        await self.websocket.send_json(message.payload)
 
 
 class AsyncMessageBus:
