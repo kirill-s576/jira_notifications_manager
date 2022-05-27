@@ -2,7 +2,7 @@
 # alembic==1.6.5
 # psycopg2-binary==2.8.6
 # asyncpg==0.23.0
-aiofiles==0.8.0
+aiofiles
 anyio==3.6.1
 asgiref==3.5.2
 click==8.1.3
