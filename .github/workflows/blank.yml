@@ -56,14 +56,12 @@ jobs:
       
       - name: executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@master
-        env:
-          ENV: ${{ secrets.ENV }}
         with:
           host: ${{ secrets.JB_SERVER_SSH_HOST }}
           username: ${{ secrets.JB_SERVER_USERNAME }}
           key: ${{ secrets.JB_SERVER_PRIVATE_SSH_KEY }}
-          envs: ENV
           script: |
             cd /home/${{ secrets.JB_SERVER_USERNAME }}/jira_notifications_manager
             git pull origin main
+            export ENV=${{ secrets.ENV }}
             docker-compose up -d --build
