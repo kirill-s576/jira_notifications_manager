@@ -7,12 +7,7 @@
         <h1>App Logger</h1>
         <ul id='messages'></ul>
         <script>
-            {% if server_port == 80 %}
-                let ws = new WebSocket("ws://{{server_host}}/ws/websocket")
-            {% else %}
-                let ws = new WebSocket("ws://{{server_host}}:{{server_port}}/ws/websocket")
-            {% endif %}
-
+            let ws = new WebSocket("{{ websocket_url }}")
             ws.onmessage = function(event) {
                 let messages = document.getElementById('messages')
                 let message = document.createElement('li')

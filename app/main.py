@@ -30,10 +30,18 @@ app.include_router(websocket_logger.router)
 
 @app.get("/home", response_class=HTMLResponse, include_in_schema=False)
 async def index(request: Request):
+    websocket_url = ""
+    if settings.SERVER_SSL:
+        websocket_url += "wss://"
+    else:
+        websocket_url += "ws://"
+    websocket_url += settings.SERVER_HOST
+    if int(settings.SERVER_PORT) != 80:
+        websocket_url += f"{settings.SERVER_PORT}"
+    websocket_url += "/ws/websocket"
     return templates.TemplateResponse("index.html", {
         "request": request,
-        "server_host": settings.SERVER_HOST,
-        "server_port": settings.SERVER_PORT
+        "websocket_url": websocket_url
     })
 
 
