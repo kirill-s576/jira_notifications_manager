@@ -25,20 +25,20 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       # - uses: actions/checkout@v3
 
-      - name: Install SSH Key
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.JB_SERVER_PRIVATE_SSH_KEY }}
-          known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
+      # - name: Install SSH Key
+      #   uses: shimataro/ssh-key-action@v2
+      #   with:
+      #     key: ${{ secrets.JB_SERVER_PRIVATE_SSH_KEY }}
+      #     known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
       
-      - name: Adding Known Hosts
-        run: ssh-keyscan -H ${{ secrets.JB_SERVER_SSH_HOST }} >> ~/.ssh/known_hosts
+      # - name: Adding Known Hosts
+      #   run: ssh-keyscan -H ${{ secrets.JB_SERVER_SSH_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Pull repo on server
-        run: |
-          export ENV=${{ ENV }}
-          ssh ${{ secrets.JB_SERVER_USERNAME }}@${{ secrets.JB_SERVER_SSH_HOST }} cd /home/${{ secrets.JB_SERVER_USERNAME }}/jira_notifications_manager && git pull origin main
-          ssh ${{ secrets.JB_SERVER_USERNAME }}@${{ secrets.JB_SERVER_SSH_HOST }} cd /home/${{ secrets.JB_SERVER_USERNAME }}/jira_notifications_manager && docker-compose up -d --build
+      # - name: Pull repo on server
+      #   run: |
+      #     export ENV=${{ ENV }}
+      #     ssh ${{ secrets.JB_SERVER_USERNAME }}@${{ secrets.JB_SERVER_SSH_HOST }} cd /home/${{ secrets.JB_SERVER_USERNAME }}/jira_notifications_manager && git pull origin main
+      #     ssh ${{ secrets.JB_SERVER_USERNAME }}@${{ secrets.JB_SERVER_SSH_HOST }} cd /home/${{ secrets.JB_SERVER_USERNAME }}/jira_notifications_manager && docker-compose up -d --build
       
       
       # - name: Run docker compose 
@@ -49,7 +49,20 @@ jobs:
       #     host: ${{ secrets.JB_SERVER_SSH_HOST }}
       #     user: ${{ secrets.JB_SERVER_USERNAME }}
       #     connect_timeout: 120s
-      #     script: |
-      #       cd /home/${{ secrets.JB_SERVER_USERNAME }}/jira_notifications_manager
-      #       git pull origin main
-      #       docker-compose up -d --build
+          # script: |
+          #   cd /home/${{ secrets.JB_SERVER_USERNAME }}/jira_notifications_manager
+          #   git pull origin main
+          #   docker-compose up -d --build
+      
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
+        env:
+          ENV: ${{ ENV }}
+        with:
+          host: ${{ secrets.JB_SERVER_SSH_HOST }}
+          username: ${{ secrets.JB_SERVER_USERNAME }}
+          envs: ENV
+          script: |
+            cd /home/${{ secrets.JB_SERVER_USERNAME }}/jira_notifications_manager
+            git pull origin main
+            docker-compose up -d --build
