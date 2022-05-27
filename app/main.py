@@ -4,6 +4,8 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from src.router import example, websocket_logger
+import settings
+
 
 app = FastAPI()
 
@@ -28,6 +30,10 @@ app.include_router(websocket_logger.router)
 
 @app.get("/home", response_class=HTMLResponse, include_in_schema=False)
 async def index(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse("index.html", {
+        "request": request,
+        "server_host": settings.SERVER_HOST,
+        "server_port": settings.SERVER_PORT
+    })
 
 
