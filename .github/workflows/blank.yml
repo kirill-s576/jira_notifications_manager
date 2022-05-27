@@ -41,17 +41,15 @@ jobs:
       #     ssh ${{ secrets.JB_SERVER_USERNAME }}@${{ secrets.JB_SERVER_SSH_HOST }} cd /home/${{ secrets.JB_SERVER_USERNAME }}/jira_notifications_manager && docker-compose up -d --build
       
       
-      - name: ssh pipeline 1
+      - name: Run docker compose 
         uses: cross-the-world/ssh-pipeline@master
         env:
-          WELCOME: "ssh pipeline"
+          ENV: ${{ secrets.ENV }}
         with:
           host: ${{ secrets.JB_SERVER_SSH_HOST }}
           user: ${{ secrets.JB_SERVER_USERNAME }}
           connect_timeout: 120s
           script: |
-            export ENV=${{ secrets.ENV }}
-            mkdir -p /home/${{ secrets.JB_SERVER_USERNAME }}
             cd /home/${{ secrets.JB_SERVER_USERNAME }}/jira_notifications_manager
             git pull origin main
             docker-compose up -d --build
