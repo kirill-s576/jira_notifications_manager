@@ -6,14 +6,14 @@ services:
     build: ./nginx
     restart: always
     ports:
-      - "8000:80"
+      - "80:80"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./app/static:/static
     networks:
       - web_app_network
     env_file:
-      - ./environments/.local.env
+      - ./environments/.${ENV}.env
     depends_on:
       - "web_app"
   
@@ -27,7 +27,7 @@ services:
     networks:
       - web_app_network
     env_file:
-      - ./environments/.local.env
+      - ./environments/.${ENV}.env
     command: /code/entrypoint.sh
   
 networks:
