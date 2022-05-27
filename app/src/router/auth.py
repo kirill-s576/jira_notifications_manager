@@ -36,5 +36,5 @@ async def confirm_oauth(request: Request, code: str, state: str):
         "oauth_code": code,
         "oauth_state": state
     }
-    WS_MESSAGE_BUS.add_message(message=BusMessage(payload=message))
+    await WS_MESSAGE_BUS.add_message(message=BusMessage(payload=message))
     return RedirectResponse("/", status_code=301)

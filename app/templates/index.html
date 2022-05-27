@@ -4,18 +4,18 @@
         <link href="/static/styles.css" rel="stylesheet">
     </head>
     <body>
-        <h1>App Logger</h1>
+        <h1>Home page</h1>
         <ul id='messages'></ul>
-        <script>
+
+{#        <script>#}
             {#let ws = new WebSocket("{{ websocket_url }}")#}
-            let ws = new WebSocket("wss://k.dserdiuk.com/ws/websocket")
-            ws.onmessage = function(event) {
-                let messages = document.getElementById('messages')
-                let message = document.createElement('li')
-                let content = document.createTextNode(event.data)
-                message.appendChild(content)
-                messages.appendChild(message)
-            };
-        </script>
+            {#let ws = new WebSocket("wss://k.dserdiuk.com/ws/websocket")#}
+            {#ws.onmessage = function(event) {#}
+            {#    let messages = document.getElementById('messages')#}
+            {#    let message = document.createElement('li')#}
+            {#    let content = document.createTextNode(event.data)#}
+            {#    message.appendChild(content)#}
+            {#    messages.appendChild(message)}#}
+{#        </script>#}
     </body>
 </html>
