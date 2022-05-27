@@ -26,7 +26,7 @@ app.include_router(example.router)
 app.include_router(websocket_logger.router)
 
 
-@app.get("/", response_class=HTMLResponse, include_in_schema=False)
+@app.get("/home", response_class=HTMLResponse, include_in_schema=False)
 async def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
