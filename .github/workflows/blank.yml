@@ -52,4 +52,4 @@ jobs:
           script: |
             cd /home/${{ secrets.JB_SERVER_USERNAME }}/jira_notifications_manager
             git pull origin main
-            docker-compose up -d --build
+            docker-compose up -d
