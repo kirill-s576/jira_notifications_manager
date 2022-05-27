@@ -57,7 +57,7 @@ jobs:
       - name: executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@master
         env:
-          ENV: ${{ ENV }}
+          ENV: ${{ secrets.ENV }}
         with:
           host: ${{ secrets.JB_SERVER_SSH_HOST }}
           username: ${{ secrets.JB_SERVER_USERNAME }}
