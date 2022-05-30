@@ -1,6 +1,6 @@
 from pydantic import BaseSettings
 from typing import List
-
+from src.utils.message_bus import AsyncMessageBus
 
 
 class Settings(BaseSettings):
@@ -26,3 +26,7 @@ class Settings(BaseSettings):
         "read:jira-work",
         "offline_access"
     ]
+
+
+APP_CONFIG = Settings()
+WS_MESSAGE_BUS = AsyncMessageBus()

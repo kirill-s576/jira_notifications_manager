@@ -1,5 +1,5 @@
 from fastapi import APIRouter, WebSocket
-from main import WS_MESSAGE_BUS
+from settings import WS_MESSAGE_BUS
 from src.utils.message_bus import WebsocketAsyncBusMessageHandler
 
 

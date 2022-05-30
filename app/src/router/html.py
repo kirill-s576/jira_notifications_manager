@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from main import settings
+from settings import APP_CONFIG
 
 
 router = APIRouter(prefix="")
@@ -10,13 +10,13 @@ templates = Jinja2Templates(directory="templates")
 
 def get_websocket_url():
     websocket_url = ""
-    if settings.SERVER_SSL:
+    if APP_CONFIG.SERVER_SSL:
         websocket_url += "wss://"
     else:
         websocket_url += "ws://"
-    websocket_url += settings.SERVER_HOST
-    if int(settings.SERVER_PORT) != 80:
-        websocket_url += f"{settings.SERVER_PORT}"
+    websocket_url += APP_CONFIG.SERVER_HOST
+    if int(APP_CONFIG.SERVER_PORT) != 80:
+        websocket_url += f"{APP_CONFIG.SERVER_PORT}"
     websocket_url += "/ws/websocket"
     return websocket_url
 
