@@ -32,19 +32,22 @@ jobs:
           username: ${{ secrets.JB_SERVER_USERNAME }}
           key: ${{ secrets.JB_SERVER_PRIVATE_SSH_KEY }}
           script: |
-            cd /home/${{ secrets.JB_SERVER_USERNAME }}/jira_notifications_manager
-            git pull origin main
+            cd /home/${{ secrets.JB_SERVER_USERNAME }}/jira_notifications_manager &&
+            git pull origin main &&
             export ENV=${{ secrets.ENV }}
-            export SERVER_HOST=${{ secrets.SERVER_HOST }}
-            export SERVER_PORT=${{ secrets.SERVER_PORT }}
-            export SERVER_SSL=${{ secrets.SERVER_SSL }}
-            export MONGO_DATABASE=${{ secrets.MONGO_DATABASE }}
-            export MONGO_USER=${{ secrets.MONGO_USER }}
-            export MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }}
-            export MONGO_INITDB_ROOT_USERNAME=${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
-            export MONGO_INITDB_ROOT_PASSWORD=${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}
-            export JIRA_APP_CLIENT_ID=${{ secrets.JIRA_APP_CLIENT_ID }}
-            export JIRA_APP_SECRET=${{ secrets.JIRA_APP_SECRET }}
-            export TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}
-            echo "$SERVER_HOST"
+            rm -rf .env
+            touch .env
+            echo "SERVER_HOST=${{ secrets.SERVER_HOST }}" >> .env 2>&1
+            echo "SERVER_PORT=${{ secrets.SERVER_PORT }}" >> .env 2>&1
+            echo "SERVER_SSL=${{ secrets.SERVER_SSL }}" >> .env 2>&1
+            echo "JIRA_APP_CLIENT_ID=${{ secrets.JIRA_APP_CLIENT_ID }}" >> .env 2>&1
+            echo "JIRA_APP_SECRET=${{ secrets.JIRA_APP_SECRET }}" >> .env 2>&1
+            echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" >> .env 2>&1
+            echo "MONGO_INITDB_ROOT_USERNAME=${{ secrets.MONGO_INITDB_ROOT_USERNAME }}" >> .env 2>&1
+            echo "MONGO_INITDB_ROOT_PASSWORD=${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}" >> .env 2>&1
+            echo "MONGO_HOST=${{ secrets.MONGO_HOST }}" >> .env 2>&1
+            echo "MONGO_PORT=${{ secrets.MONGO_PORT }}" >> .env 2>&1
+            echo "MONGO_DATABASE=${{ secrets.MONGO_DATABASE }}" >> .env 2>&1
+            echo "MONGO_USER=${{ secrets.MONGO_USER }}" >> .env 2>&1
+            echo "MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }}" >> .env 2>&1
             docker-compose up -d --build
