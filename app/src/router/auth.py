@@ -18,7 +18,7 @@ async def login(request: Request):
         "?"
         "audience=api.atlassian.com"
         "&client_id=zAvXEQkzZDMMFvuhv7WHoJ5JcKGzEHlM"
-        "&scope=read%3Ajira-user%20manage%3Ajira-webhook%20read%3Ajira-work"
+        "&scope=read%3Ajira-user%20manage%3Ajira-webhook%20read%3Ajira-work%20offline_access"
         "&redirect_uri=https%3A%2F%2Fk.dserdiuk.com%2Fauth%2Fconfirm_oauth"
         "&state=1357908642"
         "&response_type=code"

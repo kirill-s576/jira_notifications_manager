@@ -1,9 +1,28 @@
-import os
-from src.utils.message_bus import AsyncMessageBus
+from pydantic import BaseSettings
+from typing import List
 
 
-WS_MESSAGE_BUS = AsyncMessageBus()
 
-SERVER_HOST = os.getenv("SERVER_HOST")
-SERVER_PORT = os.getenv("SERVER_PORT")
-SERVER_SSL = os.getenv("SERVER_SSL")
+class Settings(BaseSettings):
+
+    SERVER_HOST: str = "localhost"
+    SERVER_PORT: int = 80
+    SERVER_SSL: bool = False
+
+    JIRA_APP_CLIENT_ID: str
+    JIRA_APP_SECRET: str
+
+    TELEGRAM_BOT_TOKEN: str = None
+
+    MONGO_HOST: str = "mongodb"
+    MONGO_PORT: int = 27017
+    MONGO_DATABASE: str = "jira_bot_database"
+    MONGO_USER: str = None
+    MONGO_PASSWORD: str = None
+
+    JIRA_AUTH_SCOPE_LIST: List[str] = [
+        "read:jira_user",
+        "manage:jira-webhook",
+        "read:jira-work",
+        "offline_access"
+    ]

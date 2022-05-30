@@ -129,3 +129,11 @@ dmypy.json
 .pyre/
 
 .idea
+
+tst_*.py
+
+*.env
+set_dev_env.sh
+
+mongodb/data
+mongodb/log

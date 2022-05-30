@@ -5,9 +5,14 @@ from src.router import (
     auth,
     html
 )
+from settings import Settings
+from src.utils.message_bus import AsyncMessageBus
 
 
+settings = Settings()
 app = FastAPI()
+WS_MESSAGE_BUS = AsyncMessageBus()
+
 
 # Middleware
 app.add_middleware(

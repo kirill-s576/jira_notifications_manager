@@ -12,8 +12,8 @@ services:
       - ./app/static:/static
     networks:
       - web_app_network
-    env_file:
-      - ./environments/.${ENV}.env
+    environment:
+      - SERVER_HOST:${SERVER_HOST}
     depends_on:
       - "web_app"
   
@@ -26,10 +26,38 @@ services:
       - ./app/static:/code/static
     networks:
       - web_app_network
-    env_file:
-      - ./environments/.${ENV}.env
+    environment:
+      - SERVER_HOST:${SERVER_HOST}
+      - SERVER_PORT:${SERVER_PORT}
+      - SERVER_SSL:${SERVER_SSL}
+      - MONGO_DATABASE=${MONGO_DATABASE}
+      - MONGO_USER=${MONGO_USER}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
     command: /code/entrypoint.sh
-  
+
+  mongodb:
+    container_name: mongodb
+    image: mongo:5.0
+    restart: always
+    volumes:
+      - ./mongodb/mongod.conf:/etc/mongod.conf
+      - ./mongodb/initdb.d/:/docker-entrypoint-initdb.d/
+      - ./mongodb/data/db/:/data/db/
+      - ./mongodb/log/:/var/log/
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+      - MONGO_DATABASE=${MONGO_DATABASE}
+      - MONGO_USER=${MONGO_USER}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+      - JIRA_APP_CLIENT_ID=${JIRA_APP_CLIENT_ID}
+      - JIRA_APP_SECRET=${JIRA_APP_SECRET}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+    ports:
+      - "27017:27017"
+    command: [ "-f", "/etc/mongod.conf" ]
+
+
 networks:
   web_app_network:
     driver: bridge

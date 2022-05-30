@@ -24,43 +24,26 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       # - uses: actions/checkout@v3
-
-      # - name: Install SSH Key
-      #   uses: shimataro/ssh-key-action@v2
-      #   with:
-      #     key: ${{ secrets.JB_SERVER_PRIVATE_SSH_KEY }}
-      #     known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
       
-      # - name: Adding Known Hosts
-      #   run: ssh-keyscan -H ${{ secrets.JB_SERVER_SSH_HOST }} >> ~/.ssh/known_hosts
-
-      # - name: Pull repo on server
-      #   run: |
-      #     export ENV=${{ ENV }}
-      #     ssh ${{ secrets.JB_SERVER_USERNAME }}@${{ secrets.JB_SERVER_SSH_HOST }} cd /home/${{ secrets.JB_SERVER_USERNAME }}/jira_notifications_manager && git pull origin main
-      #     ssh ${{ secrets.JB_SERVER_USERNAME }}@${{ secrets.JB_SERVER_SSH_HOST }} cd /home/${{ secrets.JB_SERVER_USERNAME }}/jira_notifications_manager && docker-compose up -d --build
-      
-      
-      # - name: Run docker compose 
-      #   uses: cross-the-world/ssh-pipeline@master
-      #   env:
-      #     ENV: ${{ secrets.ENV }}
-      #   with:
-      #     host: ${{ secrets.JB_SERVER_SSH_HOST }}
-      #     user: ${{ secrets.JB_SERVER_USERNAME }}
-      #     connect_timeout: 120s
-          # script: |
-          #   cd /home/${{ secrets.JB_SERVER_USERNAME }}/jira_notifications_manager
-          #   git pull origin main
-          #   docker-compose up -d --build
-      
-      - name: executing remote ssh commands using ssh key
+      - name: Pull project and restart docker-compose
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.JB_SERVER_SSH_HOST }}
           username: ${{ secrets.JB_SERVER_USERNAME }}
           key: ${{ secrets.JB_SERVER_PRIVATE_SSH_KEY }}
           script: |
+            export SERVER_HOST=${{ secrets.SERVER_HOST }}
+            export SERVER_PORT=${{ secrets.SERVER_PORT }}
+            export SERVER_SSL=${{ secrets.SERVER_SSL }}
+            export MONGO_DATABASE=${{ secrets.MONGO_DATABASE }}
+            export MONGO_USER=${{ secrets.MONGO_USER }}
+            export MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }}
+            export MONGO_INITDB_ROOT_USERNAME=${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
+            export MONGO_INITDB_ROOT_PASSWORD=${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}
+            export JIRA_APP_CLIENT_ID=${{ secrets.JIRA_APP_CLIENT_ID }}
+            export JIRA_APP_SECRET=${{ secrets.JIRA_APP_SECRET }}
+            export TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}
+
             cd /home/${{ secrets.JB_SERVER_USERNAME }}/jira_notifications_manager
             git pull origin main
             export ENV=${{ secrets.ENV }}
