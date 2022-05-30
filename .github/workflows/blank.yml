@@ -32,6 +32,9 @@ jobs:
           username: ${{ secrets.JB_SERVER_USERNAME }}
           key: ${{ secrets.JB_SERVER_PRIVATE_SSH_KEY }}
           script: |
+            cd /home/${{ secrets.JB_SERVER_USERNAME }}/jira_notifications_manager
+            git pull origin main
+            export ENV=${{ secrets.ENV }}
             export SERVER_HOST=${{ secrets.SERVER_HOST }}
             export SERVER_PORT=${{ secrets.SERVER_PORT }}
             export SERVER_SSL=${{ secrets.SERVER_SSL }}
@@ -43,8 +46,5 @@ jobs:
             export JIRA_APP_CLIENT_ID=${{ secrets.JIRA_APP_CLIENT_ID }}
             export JIRA_APP_SECRET=${{ secrets.JIRA_APP_SECRET }}
             export TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}
-
-            cd /home/${{ secrets.JB_SERVER_USERNAME }}/jira_notifications_manager
-            git pull origin main
-            export ENV=${{ secrets.ENV }}
+            echo "$SERVER_HOST"
             docker-compose up -d --build
