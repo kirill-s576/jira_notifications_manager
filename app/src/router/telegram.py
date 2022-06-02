@@ -27,7 +27,7 @@ async def webhook_set(request: Request):
     """
 
     """
-    url = f"https://{APP_CONFIG.SERVER_HOST}/telegram/webhook/set"
+    url = f"https://{APP_CONFIG.SERVER_HOST}/telegram/webhook/{APP_CONFIG.TELEGRAM_BOT_TOKEN}"
     response = await BOT.set_webhook(url=url)
     return JSONResponse({"result": response}, status_code=200)
 
