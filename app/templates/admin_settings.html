@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="admin-settings-page"></div>
+{% endblock content %}
+
+{% block js %}
+<script>
+    let container = document.getElementById("admin-settings-page");
+    ReactDOM.render(React.createElement(AdminSettingsPage, {
+
+    }), container);
+</script>
+{% endblock js %}

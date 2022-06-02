@@ -13,3 +13,4 @@ typing_extensions==4.2.0
 uvicorn==0.17.6
 websockets==10.3
 aiofiles==0.8.0
+aiogram==2.20

@@ -3,7 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.router import (
     websocket_logger,
     auth,
-    html
+    html,
+    telegram
 )
 
 
@@ -24,3 +25,4 @@ app.add_middleware(
 app.include_router(html.router)
 app.include_router(auth.router)
 app.include_router(websocket_logger.router)
+app.include_router(telegram.router)

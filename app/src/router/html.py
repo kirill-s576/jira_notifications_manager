@@ -23,7 +23,20 @@ def get_websocket_url():
 
 @router.get("/", response_class=HTMLResponse, include_in_schema=False)
 async def index(request: Request):
-    return templates.TemplateResponse("index.html", {
-        "request": request,
-        "websocket_url": get_websocket_url()
+    return templates.TemplateResponse("home.html", {
+        "request": request
+    })
+
+
+@router.get("/auth", response_class=HTMLResponse, include_in_schema=False)
+async def auth(request: Request):
+    return templates.TemplateResponse("auth.html", {
+        "request": request
+    })
+
+
+@router.get("/admin_settings", response_class=HTMLResponse, include_in_schema=False)
+async def auth(request: Request):
+    return templates.TemplateResponse("admin_settings.html", {
+        "request": request
     })

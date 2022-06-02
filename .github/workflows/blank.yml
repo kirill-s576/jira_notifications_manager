@@ -48,6 +48,7 @@ jobs:
             echo "MONGO_HOST=${{ secrets.MONGO_HOST }}" >> .env 2>&1
             echo "MONGO_PORT=${{ secrets.MONGO_PORT }}" >> .env 2>&1
             echo "MONGO_DATABASE=${{ secrets.MONGO_DATABASE }}" >> .env 2>&1
+            echo "MONGO_INITDB_DATABASE=${{ secrets.MONGO_DATABASE }}" >> .env 2>&1
             echo "MONGO_USER=${{ secrets.MONGO_USER }}" >> .env 2>&1
             echo "MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }}" >> .env 2>&1
             docker-compose up -d --build

@@ -1,12 +1,13 @@
 {% extends "base.html" %}
+
 {% block content %}
-<div id="home-page"></div>
+<div id="auth-page"></div>
 {% endblock content %}
 
 {% block js %}
 <script>
-    let container = document.getElementById("home-page");
-    ReactDOM.render(React.createElement(HomePage, {
+    let container = document.getElementById("auth-page");
+    ReactDOM.render(React.createElement(AuthPage, {
 
     }), container);
 </script>

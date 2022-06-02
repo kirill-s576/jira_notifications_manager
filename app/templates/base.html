@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>Jira Notifications Manager</title>
+        <link href="/static/styles.css" rel="stylesheet">
+
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            clifford: '#da373d',
+                        }
+                    }
+                }
+            }
+        </script>
+
+        <script src="/static/react_components/pages/HomePage.js"></script>
+        <script src="/static/react_components/pages/AuthPage.js"></script>
+        <script src="/static/react_components/pages/AdminSettingsPage.js"></script>
+    </head>
+    <body class="w-100">
+        {% block content %}
+        {% endblock %}
+    </body>
+
+    {% block js %}
+    {% endblock %}
+</html>

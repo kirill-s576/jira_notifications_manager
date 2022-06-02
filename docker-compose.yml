@@ -35,7 +35,6 @@ services:
     image: mongo:5.0
     restart: always
     volumes:
-      - ./mongodb/mongod.conf:/etc/mongod.conf
       - ./mongodb/initdb.d/:/docker-entrypoint-initdb.d/
       - ./mongodb/data/db/:/data/db/
       - ./mongodb/log/:/var/log/
@@ -43,7 +42,6 @@ services:
       - .env
     ports:
       - "27017:27017"
-    command: [ "-f", "/etc/mongod.conf" ]
 
 
 networks:
