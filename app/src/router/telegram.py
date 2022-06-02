@@ -6,7 +6,7 @@ import aiogram
 import json
 import traceback
 from pydantic import BaseModel
-
+from aiogram.utils.executor import start_webhook
 
 router = APIRouter(prefix="/telegram")
 
@@ -37,7 +37,8 @@ async def webhook_handle(request: Request, telegram_bot_token: str):
     try:
         # await BOT.send_message("356080087", json.dumps(await request.json()))
         update = aiogram.types.Update(**request_data)
-        await dp.process_update(update)
+        r = await dp.process_update(update)
+        await WS_MESSAGE_BUS.add_message(message=BusMessage(payload={"message": str(r)}))
         return PlainTextResponse("true", status_code=200)
     except Exception as e:
         return PlainTextResponse(f"{traceback.format_exc()}", status_code=500)
