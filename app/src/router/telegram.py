@@ -10,7 +10,7 @@ router = APIRouter(prefix="/telegram")
 BOT = aiogram.Bot(token=APP_CONFIG.TELEGRAM_BOT_TOKEN)
 
 
-@router.post(f"/webhook/{APP_CONFIG.TELEGRAM_BOT_TOKEN}", tags=["Telegram"])
+@router.post(f"/webhook/{APP_CONFIG.TELEGRAM_BOT_TOKEN}", tags=["Telegram"], include_in_schema=False)
 async def webhook_handle(request: Request):
     """
 
@@ -27,7 +27,7 @@ async def webhook_set(request: Request):
     """
 
     """
-    url = f"https://{APP_CONFIG.SERVER_HOST}:{APP_CONFIG.SERVER_PORT}/telegram/webhook/set"
+    url = f"https://{APP_CONFIG.SERVER_HOST}/telegram/webhook/set"
     response = await BOT.set_webhook(url=url)
     return JSONResponse({"result": response}, status_code=200)
 
