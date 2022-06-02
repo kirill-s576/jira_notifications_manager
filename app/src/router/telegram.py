@@ -34,7 +34,7 @@ async def webhook_handle(request: Request, telegram_bot_token: str):
     try:
         # await BOT.send_message("356080087", json.dumps(await request.json()))
         request_data = await request.json()
-        await dp.process_updates(request_data)
+        await dp.process_update(request_data)
         message = {
             "telegram_webhook": request_data
         }
