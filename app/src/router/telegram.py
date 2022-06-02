@@ -4,7 +4,7 @@ from settings import WS_MESSAGE_BUS, APP_CONFIG
 from src.utils.message_bus import BusMessage
 import aiogram
 import json
-
+import traceback
 
 
 router = APIRouter(prefix="/telegram")
@@ -28,12 +28,15 @@ async def webhook_handle(request: Request, telegram_bot_token: str):
     """
     if telegram_bot_token != APP_CONFIG.TELEGRAM_BOT_TOKEN:
         return PlainTextResponse("Bot with this token not found", status_code=404)
-    await BOT.send_message("356080087", json.dumps(request.json()))
-    message = {
-        "telegram_webhook": request.json()
-    }
-    await WS_MESSAGE_BUS.add_message(message=BusMessage(payload=message))
-    return PlainTextResponse("true", status_code=200)
+    try:
+        await BOT.send_message("356080087", json.dumps(request.json()))
+        message = {
+            "telegram_webhook": request.json()
+        }
+        await WS_MESSAGE_BUS.add_message(message=BusMessage(payload=message))
+        return PlainTextResponse("true", status_code=200)
+    except Exception as e:
+        return PlainTextResponse(f"{traceback.format_exc()}", status_code=500)
 
 
 @router.post(f"/webhook/set", tags=["Telegram"])
