@@ -22,8 +22,6 @@ async def send_welcome(message: aiogram.types.Message):
     await message.reply("Hi!\nI'm EchoBot!\nPowered by aiogram.")
 
 
-
-
 @router.post("/webhook/handle/{telegram_bot_token}", tags=["Telegram"])
 async def webhook_handle(request: Request, telegram_bot_token: str):
     """
@@ -38,7 +36,7 @@ async def webhook_handle(request: Request, telegram_bot_token: str):
     await WS_MESSAGE_BUS.add_message(message=BusMessage(payload=message))
     try:
         # await BOT.send_message("356080087", json.dumps(await request.json()))
-        update = aiogram.types.Update(request_data)
+        update = aiogram.types.Update(**request_data)
         await dp.process_update(update)
         return PlainTextResponse("true", status_code=200)
     except Exception as e:
