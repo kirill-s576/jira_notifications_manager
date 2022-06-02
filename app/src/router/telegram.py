@@ -31,14 +31,15 @@ async def webhook_handle(request: Request, telegram_bot_token: str):
     """
     if telegram_bot_token != APP_CONFIG.TELEGRAM_BOT_TOKEN:
         return PlainTextResponse("Bot with this token not found", status_code=404)
+    request_data = await request.json()
+    message = {
+        "telegram_webhook": request_data
+    }
+    await WS_MESSAGE_BUS.add_message(message=BusMessage(payload=message))
     try:
         # await BOT.send_message("356080087", json.dumps(await request.json()))
-        request_data = await request.json()
-        await dp.process_update(request_data)
-        message = {
-            "telegram_webhook": request_data
-        }
-        await WS_MESSAGE_BUS.add_message(message=BusMessage(payload=message))
+        update = aiogram.types.Update(request_data)
+        await dp.process_update(update)
         return PlainTextResponse("true", status_code=200)
     except Exception as e:
         return PlainTextResponse(f"{traceback.format_exc()}", status_code=500)
