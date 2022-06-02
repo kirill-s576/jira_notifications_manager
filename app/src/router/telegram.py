@@ -5,6 +5,7 @@ from src.utils.message_bus import BusMessage
 import aiogram
 import json
 import traceback
+from pydantic import BaseModel
 
 
 router = APIRouter(prefix="/telegram")
@@ -21,6 +22,8 @@ async def send_welcome(message: aiogram.types.Message):
     await message.reply("Hi!\nI'm EchoBot!\nPowered by aiogram.")
 
 
+
+
 @router.post("/webhook/handle/{telegram_bot_token}", tags=["Telegram"])
 async def webhook_handle(request: Request, telegram_bot_token: str):
     """
@@ -29,9 +32,11 @@ async def webhook_handle(request: Request, telegram_bot_token: str):
     if telegram_bot_token != APP_CONFIG.TELEGRAM_BOT_TOKEN:
         return PlainTextResponse("Bot with this token not found", status_code=404)
     try:
-        await BOT.send_message("356080087", json.dumps(await request.json()))
+        # await BOT.send_message("356080087", json.dumps(await request.json()))
+        request_data = await request.json()
+        await dp.process_updates(request_data)
         message = {
-            "telegram_webhook": request.json()
+            "telegram_webhook": request_data
         }
         await WS_MESSAGE_BUS.add_message(message=BusMessage(payload=message))
         return PlainTextResponse("true", status_code=200)
