@@ -5,9 +5,20 @@ from src.utils.message_bus import BusMessage
 import aiogram
 import json
 
+
+
 router = APIRouter(prefix="/telegram")
 
 BOT = aiogram.Bot(token=APP_CONFIG.TELEGRAM_BOT_TOKEN)
+dp = aiogram.Dispatcher(BOT)
+
+
+@dp.message_handler(commands=['start', 'help'])
+async def send_welcome(message: aiogram.types.Message):
+    """
+    This handler will be called when user sends `/start` or `/help` command
+    """
+    await message.reply("Hi!\nI'm EchoBot!\nPowered by aiogram.")
 
 
 @router.post("/webhook/handle/{telegram_bot_token}", tags=["Telegram"])
@@ -17,6 +28,7 @@ async def webhook_handle(request: Request, telegram_bot_token: str):
     """
     if telegram_bot_token != APP_CONFIG.TELEGRAM_BOT_TOKEN:
         return PlainTextResponse("Bot with this token not found", status_code=404)
+    await dp.process_updates(request.json())
     message = {
         "telegram_webhook": request.json()
     }
