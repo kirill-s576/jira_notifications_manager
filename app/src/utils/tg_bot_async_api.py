@@ -1,6 +1,5 @@
 
 from aiogram import Bot, Dispatcher, executor, types
-import asyncio
 
 
 class TelegramBotAsyncApi:
