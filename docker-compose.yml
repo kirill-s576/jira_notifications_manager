@@ -16,6 +16,7 @@ services:
       - .env
     depends_on:
       - "web_app"
+      - "react_static"
   
   web_app:
     container_name: web_app
