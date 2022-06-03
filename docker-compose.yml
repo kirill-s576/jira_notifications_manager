@@ -43,6 +43,14 @@ services:
     ports:
       - "27017:27017"
 
+  react_static:
+    container_name: react_static
+    build: ./react_static
+    volumes:
+      - ./app/static/react_components:/react_components
+    command: npx babel src --out-dir /react_components/ --presets react-app/prod
+    depends_on:
+      - web_app
 
 networks:
   web_app_network:
