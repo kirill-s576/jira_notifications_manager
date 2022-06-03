@@ -3,33 +3,29 @@ function TgWebAppMainPage({}){
     const [variable, setVariable] = React.useState("")
 
     React.useEffect(() => {
-        window.Telegram.WebApp.ready()
-        window.Telegram.WebApp.MainButton.enable()
-        window.Telegram.WebApp.MainButton.setText("Main Button")
-        window.Telegram.WebApp.MainButton.show()
+        Telegram.WebApp.ready()
+        Telegram.WebApp.MainButton.enable()
+        Telegram.WebApp.MainButton.setText("Main Button")
+        Telegram.WebApp.MainButton.show()
     }, [])
 
     const showMenuButton = (e) => {
-        window.Telegram.WebApp.MainButton.enable()
-        window.Telegram.WebApp.MainButton.setText("Main Button")
-        window.Telegram.WebApp.MainButton.show()
+        Telegram.WebApp.MainButton.enable()
+        Telegram.WebApp.MainButton.setText("Main Button")
+        Telegram.WebApp.MainButton.show()
     }
 
     const hideMenuButton = (e) => {
-        window.Telegram.WebApp.MainButton.hide()
+        Telegram.WebApp.MainButton.hide()
     }
 
     const setUserInfo = (e) => {
-        setVariable(JSON.stringify(window.Telegram.WebApp.initDataUnsafe))
+        setVariable(JSON.stringify(Telegram.WebApp.initDataUnsafe))
     }
 
     const sendData = (e) => {
-        try {
-          window.Telegram.WebApp.sendData("Test_data")
-        }
-        catch(err) {
-          setVariable(err)
-        }
+        Telegram.WebApp.sendData("sadasdasdasasd")
+        setVariable("Data was sent")
     }
 
     return (
