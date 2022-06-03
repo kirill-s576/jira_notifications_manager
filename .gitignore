@@ -139,4 +139,4 @@ mongodb/data
 mongodb/log
 
 node_modules
-app/static/react_components
+react_components

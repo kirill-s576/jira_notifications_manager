@@ -10,6 +10,7 @@ services:
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./app/static:/static
+      - ./app/static/react_components:/static/react_components
     networks:
       - web_app_network
     env_file:
@@ -24,7 +25,6 @@ services:
     restart: always
     volumes:
       - ./app:/code
-      - ./app/static:/code/static
     networks:
       - web_app_network
     env_file:
@@ -48,6 +48,7 @@ services:
     container_name: react_static
     build: ./react_static
     volumes:
+      - ./react_static/src:/react_static/src
       - ./app/static/react_components:/react_components
     command: npx babel src --out-dir /react_components/ --presets react-app/prod
     depends_on:
@@ -56,4 +57,3 @@ services:
 networks:
   web_app_network:
     driver: bridge
-
