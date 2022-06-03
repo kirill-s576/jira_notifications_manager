@@ -24,7 +24,12 @@ function TgWebAppMainPage({}){
     }
 
     const sendData = (e) => {
-        window.Telegram.WebApp.sendData("Test_data")
+        try {
+          window.Telegram.WebApp.sendData("Test_data")
+        }
+        catch(err) {
+          setVariable(err)
+        }
     }
 
     return (
