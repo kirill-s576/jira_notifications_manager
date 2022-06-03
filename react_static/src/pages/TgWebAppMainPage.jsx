@@ -20,7 +20,7 @@ function TgWebAppMainPage({}){
     }
 
     const setUserInfo = (e) => {
-        setVariable(JSON.stringify(window.Telegram.WebApp.initDataUnsafeld))
+        setVariable(JSON.stringify(window.Telegram.WebApp.initDataUnsafe))
     }
 
     return (
