@@ -1,6 +1,6 @@
 function TgWebAppMainPage({}){
 
-    const [variable, setVariable] = useState("")
+    const [variable, setVariable] = React.useState("")
 
     React.useEffect(() => {
         window.Telegram.WebApp.ready()
