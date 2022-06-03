@@ -3,11 +3,15 @@ function TgWebAppMainPage({}){
     const webApp = window.Telegram.WebApp
 
     React.useEffect(() => {
+        alert("Send react ready")
         webApp.ready()
     }, [])
 
     const clickButton = (e) => {
-        webApp.sendData("Test data")
+        console.log(e)
+        let r = webApp.sendData("Test data")
+        console.log(r)
+        alert(r)
     }
 
     return (
