@@ -23,10 +23,10 @@
             }
         </script>
 
-        <script src="/static/react_components/pages/HomePage.js?v=2"></script>
-        <script src="/static/react_components/pages/AuthPage.js?v=2"></script>
-        <script src="/static/react_components/pages/AdminSettingsPage.js?v=2"></script>
-        <script src="/static/react_components/pages/TgWebAppMainPage.js?v=2"></script>
+        <script src="/static/react_components/pages/HomePage.js?v={{ now() }}"></script>
+        <script src="/static/react_components/pages/AuthPage.js?v={{ now() }}"></script>
+        <script src="/static/react_components/pages/AdminSettingsPage.js?v={{ now() }}"></script>
+        <script src="/static/react_components/pages/TgWebAppMainPage.js?v={{ now() }}"></script>
     </head>
     <body class="w-100">
         {% block content %}

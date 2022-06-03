@@ -2,10 +2,11 @@ from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from settings import APP_CONFIG
-
+import datetime
 
 router = APIRouter(prefix="")
 templates = Jinja2Templates(directory="templates")
+templates.env.globals["now"] = datetime.datetime.utcnow
 
 
 def get_websocket_url():
