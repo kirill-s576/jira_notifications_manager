@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="tg-webapp-main-page"></div>
+{% endblock content %}
+
+{% block js %}
+<script>
+    let container = document.getElementById("tg-webapp-main-page");
+    ReactDOM.render(React.createElement(TgWebAppMainPage, {
+
+    }), container);
+</script>
+{% endblock js %}

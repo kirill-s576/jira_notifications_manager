@@ -48,5 +48,3 @@ networks:
   web_app_network:
     driver: bridge
 
-volumes:
-  web_app_static:

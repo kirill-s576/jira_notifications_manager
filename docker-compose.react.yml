@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  react_static:
+    container_name: react_static
+    build: ./react_static
+    volumes:
+      - ./app/static/react_components:/react_components
+    command: npx babel src --out-dir /react_components/ --presets react-app/prod
+
+
+volumes:
+  web_app_static:

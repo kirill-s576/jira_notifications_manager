@@ -40,3 +40,14 @@ async def auth(request: Request):
     return templates.TemplateResponse("admin_settings.html", {
         "request": request
     })
+
+
+@router.get(f"/telegram/web_app_main_page", include_in_schema=False)
+async def tg_web_app_main_page(request: Request):
+    """
+
+    """
+    return templates.TemplateResponse("tg_web_app_main_page.html", {
+        "request": request
+    })
+
