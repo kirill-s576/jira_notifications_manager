@@ -8,12 +8,6 @@ function TgWebAppMainPage({}){
         Telegram.WebApp.onEvent('mainButtonClicked', () => {
             Telegram.WebApp.MainButton.text = 'Clicked!';
 
-            try {
-              Telegram.WebApp.sendData(JSON.stringify({ data: "123123" }));
-              setVariable(`Sent`);
-            } catch (e) {
-              setVariable(`${e}, ${JSON.stringify(e)}`)
-            }
         })
     }, [])
 
@@ -37,7 +31,7 @@ function TgWebAppMainPage({}){
     }
 
     return (
-        <div>
+        <div style={{ backgroundColor: "var(--tg-theme-bg-color)" }}>
             <h1>WebApp MainPage</h1>
             <div>Variable: {variable}</div>
             <button type="button"
