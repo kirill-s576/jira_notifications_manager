@@ -31,7 +31,7 @@ function TgWebAppMainPage({}){
     }
 
     return (
-        <div style={{ backgroundColor: "var(--tg-theme-bg-color)" }}>
+        <div style={{ backgroundColor: "var(--tg-theme-bg-color)", minHeight:"var(--tg-viewport-height)"}}>
             <h1>WebApp MainPage</h1>
             <div>Variable: {variable}</div>
             <button type="button"

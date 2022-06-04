@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="tg-webapp-jira-accs"></div>
+{% endblock content %}
+
+{% block js %}
+<script>
+    let container = document.getElementById("tg-webapp-jira-accs");
+    ReactDOM.render(React.createElement(TgWebAppJiraAccs, {
+        loginPath: {{ login_path }}
+    }), container);
+</script>
+{% endblock js %}

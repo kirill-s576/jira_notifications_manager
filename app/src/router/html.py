@@ -52,3 +52,13 @@ async def tg_web_app_main_page(request: Request):
         "request": request
     })
 
+
+@router.get(f"/telegram/jira_accs", include_in_schema=False)
+async def tg_web_app_main_page(request: Request):
+    """
+
+    """
+    return templates.TemplateResponse("tg_web_app_jira_accs.html", {
+        "request": request,
+        "login_path": "/auth/login"
+    })

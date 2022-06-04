@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Request
 from fastapi.responses import RedirectResponse
-from settings import WS_MESSAGE_BUS
+from settings import WS_MESSAGE_BUS, APP_CONFIG
 from src.utils.message_bus import BusMessage
+from src.utils.jira_async_api import JiraOAuthAsyncApi
 
 
 router = APIRouter(prefix="/auth")
@@ -12,17 +13,14 @@ async def login(request: Request):
     """
 
     """
+    api = JiraOAuthAsyncApi(
+        client_id=APP_CONFIG.JIRA_APP_CLIENT_ID,
+        client_secret=APP_CONFIG.JIRA_APP_SECRET,
+        redirect_uri=f"https://{APP_CONFIG.SERVER_HOST}/auth/confirm_oauth",
+        scope=APP_CONFIG.JIRA_AUTH_SCOPE_LIST
+    )
     return RedirectResponse(
-        "https://auth.atlassian.com"
-        "/authorize"
-        "?"
-        "audience=api.atlassian.com"
-        "&client_id=zAvXEQkzZDMMFvuhv7WHoJ5JcKGzEHlM"
-        "&scope=read%3Ajira-user%20manage%3Ajira-webhook%20read%3Ajira-work%20offline_access"
-        "&redirect_uri=https%3A%2F%2Fk.dserdiuk.com%2Fauth%2Fconfirm_oauth"
-        "&state=1357908642"
-        "&response_type=code"
-        "&prompt=consent",
+        api.get_redirect_uri(),
         status_code=301
     )
 
@@ -37,4 +35,4 @@ async def confirm_oauth(request: Request, code: str, state: str):
         "oauth_state": state
     }
     await WS_MESSAGE_BUS.add_message(message=BusMessage(payload=message))
-    return RedirectResponse("/", status_code=301)
+    return RedirectResponse("/telegram/jira_accs", status_code=301)
