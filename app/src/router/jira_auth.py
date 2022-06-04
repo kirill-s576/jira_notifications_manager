@@ -10,7 +10,7 @@ router = APIRouter(prefix="/auth")
 jira_auth_api = JiraOAuthAsyncApi(
     client_id=APP_CONFIG.JIRA_APP_CLIENT_ID,
     client_secret=APP_CONFIG.JIRA_APP_SECRET,
-    redirect_uri=urllib.parse.quote(f"https://{APP_CONFIG.SERVER_HOST}/auth/confirm_oauth"),
+    redirect_uri=f"https://{APP_CONFIG.SERVER_HOST}/auth/confirm_oauth",
     scope=APP_CONFIG.JIRA_AUTH_SCOPE_LIST
 )
 
@@ -20,7 +20,6 @@ async def login(request: Request):
     """
 
     """
-
     uri = jira_auth_api.get_auth_uri(user_state="12345678")
     return RedirectResponse(
         uri,

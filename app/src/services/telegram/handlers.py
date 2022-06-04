@@ -21,3 +21,5 @@ def commands_handler(dispatcher: Dispatcher) -> Dispatcher:
         await bot.send_message(message.chat.id, "Coming soon...")
 
     return dispatcher
+
+

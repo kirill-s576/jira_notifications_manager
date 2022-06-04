@@ -4,7 +4,8 @@ from src.utils.message_bus import AsyncMessageBus
 
 
 class Settings(BaseSettings):
-
+    APP_SECRET: str = "secret"
+    
     SERVER_HOST: str = "localhost"
     SERVER_PORT: int = 80
     SERVER_SSL: bool = False

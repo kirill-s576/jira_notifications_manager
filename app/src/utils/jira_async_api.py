@@ -1,5 +1,6 @@
 import aiohttp
 from typing import Optional, List
+import urllib.parse
 
 
 class JiraOAuthAsyncApi:
@@ -23,7 +24,7 @@ class JiraOAuthAsyncApi:
         return "%20".join(self.get_scope_list())
 
     def get_redirect_uri(self):
-        return self._redirect_uri
+        return urllib.parse.quote(self._redirect_uri)
 
     def get_client_id(self):
         return self._client_id
@@ -49,9 +50,9 @@ class JiraOAuthAsyncApi:
             payload = {
                 "code": code,
                 "grant_type": "authorization_code",
-                "client_id": self._client_id,
-                "client_secret": self._client_secret,
-                "redirect_uri": self._redirect_uri
+                "client_id": {self.get_client_id()},
+                "client_secret": {self.get_client_secret()},
+                "redirect_uri": {self.get_redirect_uri()}
             }
             headers = {
                 "Content-Type": "application/json"
