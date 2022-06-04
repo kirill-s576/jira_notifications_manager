@@ -24,7 +24,7 @@ class TelegramUser {
     }
 }
 
-function TgWebAppMainPage({loginPath}){
+function TgWebAppJiraAccs({loginPath}){
     const user = new TelegramUser(Telegram.WebApp.initDataUnsafe.user)
     
     React.useEffect(() => {
@@ -36,7 +36,7 @@ function TgWebAppMainPage({loginPath}){
     const mainButtonClickHandler = () => {
         
     }
-    
+
     const addAccoutClick = () => {
         window.location.href = loginPath;
     }
