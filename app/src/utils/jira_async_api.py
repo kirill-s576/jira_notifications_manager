@@ -27,22 +27,23 @@ class JiraOAuthAsyncApi:
         return urllib.parse.quote(self._redirect_uri)
 
     def get_client_id(self):
-        return self._client_id
+        print("Client ID", self._client_id)
+        return str(self._client_id)
 
     def get_client_secret(self):
-        return self._client_secret
+        return str(self._client_secret)
 
     def get_auth_uri(self, user_state: str):
-        url = "https://auth.atlassian.com" \
-              "/authorize" \
-              "?" \
-              "audience=api.atlassian.com" \
+        url = f"https://auth.atlassian.com" \
+              f"/authorize" \
+              f"?" \
+              f"audience=api.atlassian.com" \
               f"&client_id={self.get_client_id()}" \
               f"&scope={self.get_scope_string()}" \
               f"&redirect_uri={self.get_redirect_uri()}" \
               f"&state={user_state}" \
-              "&response_type=code" \
-              "&prompt=consent"
+              f"&response_type=code" \
+              f"&prompt=consent"
         return url
 
     async def exchange_code_to_jwt(self, code: str):
@@ -50,9 +51,9 @@ class JiraOAuthAsyncApi:
             payload = {
                 "code": code,
                 "grant_type": "authorization_code",
-                "client_id": {self.get_client_id()},
-                "client_secret": {self.get_client_secret()},
-                "redirect_uri": {self.get_redirect_uri()}
+                "client_id": self.get_client_id(),
+                "client_secret": self.get_client_secret(),
+                "redirect_uri": self.get_redirect_uri()
             }
             headers = {
                 "Content-Type": "application/json"
