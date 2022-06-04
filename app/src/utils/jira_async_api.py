@@ -24,10 +24,9 @@ class JiraOAuthAsyncApi:
         return "%20".join(self.get_scope_list())
 
     def get_redirect_uri(self):
-        return urllib.parse.quote(self._redirect_uri)
+        return self._redirect_uri#urllib.parse.quote(self._redirect_uri)
 
     def get_client_id(self):
-        print("Client ID", self._client_id)
         return str(self._client_id)
 
     def get_client_secret(self):
@@ -58,6 +57,7 @@ class JiraOAuthAsyncApi:
             headers = {
                 "Content-Type": "application/json"
             }
+            print(payload)
             async with session.post(
                     'https://auth.atlassian.com/oauth/token',
                     json=payload,
