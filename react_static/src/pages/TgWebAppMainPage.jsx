@@ -4,9 +4,17 @@ function TgWebAppMainPage({}){
 
     React.useEffect(() => {
         Telegram.WebApp.ready()
-        Telegram.WebApp.MainButton.enable()
-        Telegram.WebApp.MainButton.setText("Main Button")
-        Telegram.WebApp.MainButton.show()
+
+        Telegram.WebApp.onEvent('mainButtonClicked', () => {
+            Telegram.WebApp.MainButton.text = 'Clicked!';
+
+            try {
+              Telegram.WebApp.sendData(JSON.stringify({ data: "123123" }));
+              setVariable(`Sent`);
+            } catch (e) {
+              setVariable(`${e}, ${JSON.stringify(e)}`)
+            }
+        })
     }, [])
 
     const showMenuButton = (e) => {
