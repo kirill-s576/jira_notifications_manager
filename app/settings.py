@@ -22,7 +22,7 @@ class Settings(BaseSettings):
     MONGO_PASSWORD: str = None
 
     JIRA_AUTH_SCOPE_LIST: List[str] = [
-        "read:jira_user",
+        "read:jira-user",
         "manage:jira-webhook",
         "read:jira-work",
         "offline_access"
