@@ -36,7 +36,7 @@ def check_user_middleware(dispatcher: Dispatcher, **kwargs) -> Dispatcher:
         ):
             user_db_manager = UserAsyncMongoManager(mongo_session)
             user_model = self.get_user_model(message)
-            user_model, created = user_db_manager.get_or_create_user(user_model)
+            user_model, created = await user_db_manager.get_or_create_user(user_model)
             setattr(message, "user_model", user_model)
             setattr(message, "user_created", created)
 
