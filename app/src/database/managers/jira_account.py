@@ -16,6 +16,8 @@ class JiraAccountAsyncMongoManager(BaseAsyncMongoManager):
             "resource_id": resource_id
         }
         result = await self.collection.find_one(query, session=self.session)
+        if not result:
+            return None
         return JiraAccountRead(**result)
 
     async def get_and_replace_or_create_account(
