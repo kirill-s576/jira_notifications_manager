@@ -91,7 +91,7 @@ class JiraAsyncApi(BaseAsyncApi):
             "Authorization": f"Bearer {self._access_token}"
         }
 
-    def get_accessible_resources(self) -> List[dict]:
+    async def get_accessible_resources(self) -> List[dict]:
         url = "https://api.atlassian.com/oauth/token/accessible-resources"
         result = await self.send_get_request(
             url=url,
