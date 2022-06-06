@@ -1,29 +1,28 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, Depends
 from fastapi.responses import PlainTextResponse, JSONResponse
 from settings import WS_MESSAGE_BUS, APP_CONFIG
 from src.utils.message_bus import BusMessage
-from src.services.telegram.bot import JiraBot
+from src.services.telegram.bot_service import JiraBotAsyncService
 import json
+from src.database.client import with_new_async_mongo_session
 
 
 router = APIRouter(prefix="/telegram")
-BOT = JiraBot(APP_CONFIG.TELEGRAM_BOT_TOKEN)
+BOT = JiraBotAsyncService(APP_CONFIG.TELEGRAM_BOT_TOKEN)
 
 
 @router.post("/webhook/handle/{telegram_bot_token}", tags=["Telegram"])
-async def webhook_handle(request: Request, telegram_bot_token: str):
+async def webhook_handle(
+        request: Request,
+        telegram_bot_token: str
+):
     """
 
     """
-    if telegram_bot_token != APP_CONFIG.TELEGRAM_BOT_TOKEN:
-        return PlainTextResponse("Bot with this token not found", status_code=404)
+    bot = JiraBotAsyncService(token=APP_CONFIG.TELEGRAM_BOT_TOKEN)
     request_data = await request.json()
-    await WS_MESSAGE_BUS.add_message(message=BusMessage(payload=request_data))
-    try:
-        await BOT.process_update(request_data)
-        return PlainTextResponse("true", status_code=200)
-    except Exception as e:
-        return PlainTextResponse(str(e), status_code=500)
+    await bot.process_update(request_data)
+    return PlainTextResponse("true", status_code=200)
 
 
 @router.post(f"/webhook/set", tags=["Telegram"])

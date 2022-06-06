@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from src.router import (
-    websocket_logger,
+    websocket,
     jira_auth,
     html,
     api_telegram,
@@ -25,7 +25,7 @@ app.add_middleware(
 # Include routers.
 app.include_router(html.router)
 app.include_router(jira_auth.router)
-app.include_router(websocket_logger.router)
+app.include_router(websocket.router)
 app.include_router(api_telegram.router)
 app.include_router(api_general.router)
 

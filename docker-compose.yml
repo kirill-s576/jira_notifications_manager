@@ -43,6 +43,8 @@ services:
       - .env
     ports:
       - "27017:27017"
+    networks:
+      - web_app_network
 
   react_static:
     container_name: react_static

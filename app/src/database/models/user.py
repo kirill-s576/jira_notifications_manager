@@ -1,7 +1,7 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from enum import Enum
 from typing import Optional
-from bson import ObjectId
+from .general import ObjectIdModelMixin
 
 
 class UserRoles(Enum):
@@ -21,15 +21,10 @@ class UserBaseModel(BaseModel):
     role: UserRoles = UserRoles.USER
     telegram_account: Optional[TelegramAccount]
 
-    class Config:
-        arbitrary_types_allowed = True
-        use_enum_values = True
-
 
 class UserCreateModel(UserBaseModel):
     ...
 
 
-class UserReadModel(UserBaseModel):
-    id: ObjectId = Field(...)
-
+class UserReadModel(UserBaseModel, ObjectIdModelMixin):
+    ...

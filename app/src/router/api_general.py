@@ -1,29 +1,23 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, HTTPException
 from fastapi.responses import JSONResponse
-import functools
 
 
 router = APIRouter(prefix="/general")
 
 
-def wrapper(func):
-    @functools.wraps(func)
-    async def wrapped(*args, **kwargs):
-        print("Decorator")
-        print(kwargs)
-        request: Request = kwargs.get("request")
-        token = request.query_params.get("token")
-        if token != "12345":
-            return JSONResponse({"message": "Incorrect token"}, status_code=403)
-        return await func(*args, **kwargs)
-    return wrapped
+async def verify_query_params_token(
+        token: str
+):
+    if token != "12345":
+        raise HTTPException(status_code=403, detail="Token query params invalid")
 
 
 @router.get(f"/test", tags=["General"])
-@wrapper
-async def webhook_info(request: Request, token: str):
+async def test_endpoint(
+        request: Request
+):
     """
 
     """
-    response_dict = {}
-    return JSONResponse(response_dict, status_code=200)
+    r = {}
+    return JSONResponse(r, status_code=200)

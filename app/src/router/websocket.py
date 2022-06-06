@@ -3,11 +3,11 @@ from settings import WS_MESSAGE_BUS
 from src.utils.message_bus import WebsocketAsyncBusMessageHandler
 
 
-router = APIRouter(prefix="/ws")
+router = APIRouter(prefix="/websocket")
 
 
-@router.websocket("/websocket")
-async def websocket_endpoint(websocket: WebSocket):
+@router.websocket("/logger")
+async def websocket_logger(websocket: WebSocket):
     await websocket.accept()
     handler = WebsocketAsyncBusMessageHandler(websocket=websocket)
     await websocket.send_json({"accepted": "true"})

@@ -30,7 +30,7 @@ async def auth(request: Request):
     })
 
 
-@router.get(f"/telegram/web_app_main_page", include_in_schema=False)
+@router.get(f"/telegram/web_app_main_page", response_class=HTMLResponse, include_in_schema=False)
 async def tg_web_app_main_page(request: Request):
     """
 
@@ -40,12 +40,12 @@ async def tg_web_app_main_page(request: Request):
     })
 
 
-@router.get(f"/telegram/jira_accs", include_in_schema=False)
-async def tg_web_app_main_page(request: Request):
+@router.get(f"/telegram/jira_accs", response_class=HTMLResponse, include_in_schema=False)
+async def tg_web_app_jira_accounts(request: Request):
     """
 
     """
     return templates.TemplateResponse("tg_web_app_jira_accs.html", {
         "request": request,
-        "login_path": "/auth/login"
+        "login_path": "/jira_auth/login"
     })

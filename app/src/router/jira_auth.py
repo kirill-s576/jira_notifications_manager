@@ -1,28 +1,21 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter
 from fastapi.responses import RedirectResponse
-from settings import WS_MESSAGE_BUS, APP_CONFIG
-from src.utils.message_bus import BusMessage
-from src.utils.jira_async_api import JiraOAuthAsyncApi
-import urllib.parse
+from settings import APP_CONFIG
+from src.services.jira.auth_service import JiraAuthAsyncService
 
 
-router = APIRouter(prefix="/auth")
-jira_auth_api = JiraOAuthAsyncApi(
-    client_id=APP_CONFIG.JIRA_APP_CLIENT_ID,
-    client_secret=APP_CONFIG.JIRA_APP_SECRET,
-    redirect_uri=f"https://{APP_CONFIG.SERVER_HOST}/auth/confirm_oauth",
-    scope=APP_CONFIG.JIRA_AUTH_SCOPE_LIST
-)
+router = APIRouter(prefix="/jira_auth")
 
 
-@router.get("/login", tags=["Auth"])
-async def login(request: Request):
+@router.get("/login", tags=["Auth"], response_class=RedirectResponse)
+async def login(user_state: str):
     """
-
+    Redirect to Jira login page for oAuth 2.0
     """
-    uri = jira_auth_api.get_auth_uri(user_state="12345678")
+    service = JiraAuthAsyncService()
+    redirect_uri = service.get_auth_uri(user_state=user_state)
     return RedirectResponse(
-        uri,
+        redirect_uri,
         headers={
             "Cache-Control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0",
             "Expires": "Sat, 26 Jul 1997 05:00:00 GMT"
@@ -31,20 +24,16 @@ async def login(request: Request):
     )
 
 
-@router.get("/confirm_oauth", tags=["Auth"])
-async def confirm_oauth(request: Request, code: str, state: str):
+@router.get("/confirm_oauth", tags=["Auth"], response_class=RedirectResponse)
+async def confirm_oauth(code: str, state: str):
     """
-
+    Redirect URI for Jira oAuth 2.0.
+    Redirect to Telegram application.
     """
-    message = {
-        "oauth_code": code,
-        "oauth_state": state
-    }
-    auth_data = await jira_auth_api.exchange_code_to_jwt(code)
-    await WS_MESSAGE_BUS.add_message(message=BusMessage(payload=message))
-    await WS_MESSAGE_BUS.add_message(message=BusMessage(payload=auth_data))
+    service = JiraAuthAsyncService()
+    redirect_uri = await service.confirm_oauth(code, state)
     return RedirectResponse(
-        "/telegram/jira_accs",
+        redirect_uri,
         headers={
             "Cache-Control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0",
             "Expires": "Sat, 26 Jul 1997 05:00:00 GMT"

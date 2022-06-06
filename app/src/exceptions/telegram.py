@@ -1,0 +1,2 @@
+class TokenDoesNotAvailableException(Exception):
+    pass

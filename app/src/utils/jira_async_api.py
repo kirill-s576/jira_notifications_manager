@@ -57,7 +57,6 @@ class JiraOAuthAsyncApi:
             headers = {
                 "Content-Type": "application/json"
             }
-            print(payload)
             async with session.post(
                     'https://auth.atlassian.com/oauth/token',
                     json=payload,
@@ -66,9 +65,41 @@ class JiraOAuthAsyncApi:
                 return await resp.json()
 
 
-class JiraAsyncApi:
+class BaseAsyncApi:
+
+    @staticmethod
+    async def send_get_request(**kwargs):
+        async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=False)) as session:
+            async with session.get(**kwargs) as resp:
+                return await resp.json()
+
+    @staticmethod
+    async def send_post_request(**kwargs):
+        async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=False)) as session:
+            async with session.post(**kwargs) as resp:
+                return await resp.json()
+
+
+class JiraAsyncApi(BaseAsyncApi):
 
     def __init__(self, access_token: str, refresh_token: Optional[str] = None):
         self._access_token = access_token
         self._refresh_token = refresh_token
 
+    def get_auth_header(self) -> dict:
+        return {
+            "Authorization": f"Bearer {self._access_token}"
+        }
+
+    def get_accessible_resources(self) -> List[dict]:
+        url = "https://api.atlassian.com/oauth/token/accessible-resources"
+        result = await self.send_get_request(
+            url=url,
+            headers=self.get_auth_header(),
+        )
+        return result
+
+    @classmethod
+    def get_base_url(cls, resource_id: str):
+        base_url = f"https://api.atlassian.com/ex/jira/{resource_id}/rest/api/3/"
+        return base_url
