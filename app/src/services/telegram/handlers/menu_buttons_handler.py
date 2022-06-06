@@ -30,7 +30,7 @@ def menu_buttons_handler(dispatcher: Dispatcher, **kwargs) -> Dispatcher:
         This handler will be called in each case.
         """
         db_manager = JiraAccountAsyncMongoManager(mongo_session)
-        user_id = getattr(message, "user_model").chat_id
+        user_id = getattr(message, "user_model").telegram_account.chat_id
         accounts = await db_manager.get_user_accounts(user_id=user_id)
         await bot.send_message(message.chat.id, "There are your accounts: ")
         for account in accounts:
