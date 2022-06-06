@@ -48,7 +48,7 @@ class JiraAuthAsyncService:
         auth_token_data = await self.jira_auth_api.exchange_code_to_jwt(code)
         token_object = JiraToken(**auth_token_data)
         jira_api = JiraAsyncApi(token_object.access_token, token_object.refresh_token)
-        accessible_resources = jira_api.get_accessible_resources()
+        accessible_resources = await jira_api.get_accessible_resources()
         resource = accessible_resources[0]
         jira_account = self.get_account_model(user_state, token_object, resource)
         jira_account_manager = JiraAccountAsyncMongoManager(mongo_session)
