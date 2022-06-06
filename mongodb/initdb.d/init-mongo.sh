@@ -6,5 +6,6 @@ mongo -- "$MONGO_INITDB_DATABASE" <<EOF
 
     var user = '$MONGO_USER';
     var passwd = '$MONGO_PASSWORD';
-    db.createUser({user: user, pwd: passwd, roles: [{role: "dbAdmin", db: "$MONGO_INITDB_DATABASE"}]});
+    db.createUser({user: user, pwd: passwd, roles: [{role: "dbAdmin", db: "$MONGO_INITDB_DATABASE"}, {role: "readWrite", db: "$MONGO_INITDB_DATABASE"}]});
+
 EOF

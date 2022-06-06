@@ -18,7 +18,7 @@ class TelegramAccount(BaseModel):
 
 
 class UserBaseModel(BaseModel):
-    role: UserRoles = UserRoles.USER
+    role: UserRoles = UserRoles.USER.value
     telegram_account: Optional[TelegramAccount]
 
 

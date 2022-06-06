@@ -7,6 +7,7 @@ class ObjectIdModelMixin(BaseModel):
     id: Union[str, ObjectId] = Field(..., alias="_id")
 
     class Config:
+        use_enum_values = True
         arbitrary_types_allowed = True
         allow_population_by_field_name = True
         json_encoders = {

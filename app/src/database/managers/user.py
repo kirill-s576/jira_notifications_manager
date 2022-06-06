@@ -24,11 +24,13 @@ class UserAsyncMongoManager(BaseAsyncMongoManager):
             return response, True
         return exist_user, False
 
-    async def get_user_by_telegram_chat_id(self, chat_id: str) -> UserReadModel:
+    async def get_user_by_telegram_chat_id(self, chat_id: str) -> Optional[UserReadModel]:
         filter_query = {
             "telegram_account.chat_id": chat_id
         }
         data = await self.collection.find_one(filter_query, session=self.session)
+        if not data:
+            return None
         response = UserReadModel(**data)
         return response
 

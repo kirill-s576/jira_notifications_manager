@@ -34,6 +34,7 @@ def commands_handler(dispatcher: Dispatcher, **kwargs) -> Dispatcher:
         - Show menu.
         -
         """
+        print("ON_START")
         await bot.send_message(
             message.chat.id,
             "Welcome to Jira Notifications Bot",
