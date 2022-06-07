@@ -26,8 +26,7 @@ function TgWebAppMainPage({}){
     }
 
     const sendData = (e) => {
-        Telegram.WebApp.sendData("sadasdasdasasd")
-        setVariable("Data was sent")
+        setVariable(Telegram.WebApp.initData)
     }
 
     return (

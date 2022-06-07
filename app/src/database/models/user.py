@@ -15,6 +15,7 @@ class TelegramAccount(BaseModel):
     last_name: Optional[str]
     username: Optional[str]
     language_code: Optional[str]
+    memory_state: Optional[dict] = {}
 
 
 class UserBaseModel(BaseModel):

@@ -13,7 +13,7 @@ async def login(user_state: str):
     Redirect to Jira login page for oAuth 2.0
     """
     service = JiraAuthAsyncService()
-    redirect_uri = service.get_auth_uri(user_state=user_state)
+    redirect_uri = service._get_auth_uri(user_state=user_state)
     return RedirectResponse(
         redirect_uri,
         headers={

@@ -31,5 +31,8 @@ class Settings(BaseSettings):
     class Config:
         env_file = "/Users/kirill/own_projects/jira_notifications_manager/.env"
 
+
 APP_CONFIG = Settings()
 WS_MESSAGE_BUS = AsyncMessageBus()
+
+SERVER_HTTP_PROTOCOL = "http" if not APP_CONFIG.SERVER_SSL else "https"
