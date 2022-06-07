@@ -1,11 +1,7 @@
 from src.utils.tg_bot import Dispatcher, types
-from settings import APP_CONFIG
-from src.services.telegram.bot_service import JiraBotAsyncService
 
 
-def menu_buttons_handler(dispatcher: Dispatcher, **kwargs) -> Dispatcher:
-
-    bot_service = JiraBotAsyncService(APP_CONFIG.TELEGRAM_BOT_TOKEN)
+def menu_buttons_handler(dispatcher: Dispatcher, bot_service, **kwargs) -> Dispatcher:
 
     @dispatcher.message_handler(lambda message: message.text == "--Info--")
     async def bot_info(message: types.Message):

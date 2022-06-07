@@ -19,7 +19,7 @@ class CustomBot:
 
     def _add_logic_to_dispatcher(self, dp: Dispatcher) -> Dispatcher:
         for handler in self.HANDLERS:
-            handler(dp)
+            handler(dp, self)
         return dp
 
     def _get_dispatcher(self):

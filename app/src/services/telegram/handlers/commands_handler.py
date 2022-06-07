@@ -1,13 +1,11 @@
 from src.utils.tg_bot import Dispatcher, types
 from settings import APP_CONFIG
-from src.services.telegram.bot_service import JiraBotAsyncService
 
 
-def commands_handler(dispatcher: Dispatcher, **kwargs) -> Dispatcher:
+def commands_handler(dispatcher: Dispatcher, bot_service, **kwargs) -> Dispatcher:
     """
     Handler handles service commands "/..."
     """
-    bot_service = JiraBotAsyncService(APP_CONFIG.TELEGRAM_BOT_TOKEN)
 
     @dispatcher.message_handler(commands=['start'])
     async def on_start(message: types.Message):

@@ -5,7 +5,7 @@ from src.database.managers.user import UserAsyncMongoManager
 from src.database.models.user import UserCreateModel, TelegramAccount
 
 
-def check_user_middleware(dispatcher: Dispatcher, **kwargs) -> Dispatcher:
+def check_user_middleware(dispatcher: Dispatcher, bot_service, **kwargs) -> Dispatcher:
     """
     Adds to message: types.Message object:
      - user_model attribute with actual database user model.
