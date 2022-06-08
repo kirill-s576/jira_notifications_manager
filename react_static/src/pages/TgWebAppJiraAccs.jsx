@@ -37,16 +37,16 @@ function TgWebAppJiraAccs({loginPath}){
     const [jiraAccounts, setJiraAccounts] = React.useState([])
     const [errorMessage, setErrorMessage] = React.useState(null)
 
-    const verifyInitData = (initData) => {
+    const verifyInitData = (unverifiedInitData) => {
         let queryParams = new URLSearchParams({
-            init_data: initData
+            init_data: unverifiedInitData
         })
         fetch("/web_app/verify_init_data?" + queryParams, {
             method: "GET",
         })
           .then(response => response.json())
           .then((data) => {
-              setInitData(initData)
+              setInitData(unverifiedInitData)
               setUser(data)
               fetchJiraAccounts()
           })
