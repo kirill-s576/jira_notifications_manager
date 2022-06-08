@@ -48,14 +48,15 @@ function TgWebAppJiraAccs({loginPath}){
           .then((data) => {
               setInitData(unverifiedInitData)
               setUser(data)
-              fetchJiraAccounts()
+              fetchJiraAccounts(unverifiedInitData)
           })
           .catch(error => {
+              setInitData("Init data verification error")
               setErrorMessage(`Error: ${error}`)
           });
     }
 
-    const fetchJiraAccounts = () => {
+    const fetchJiraAccounts = (initData) => {
         let headers = {
             "init-data": initData
         }
