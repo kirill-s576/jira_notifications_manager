@@ -97,8 +97,6 @@ function TgWebAppJiraAccs({loginPath}){
     const getJiraAccountsJSX = () => {
         return (
             <div className="w-full">
-                InitDataTg: {Telegram.WebApp.initData}
-                InitDataState: {initData}
                 {getErrorMessageJSX()}
                 {
                     jiraAccounts.map((jiraAccount) => (
