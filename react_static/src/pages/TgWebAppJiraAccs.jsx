@@ -68,7 +68,7 @@ function TgWebAppJiraAccs({loginPath}){
                 setJiraAccounts(data)
             })
             .catch(error => {
-                setErrorMessage(`Headers: ${headers.toString()}`)
+                setErrorMessage(`Headers: ${JSON.stringify(headers)}`)
             });
     }
 
