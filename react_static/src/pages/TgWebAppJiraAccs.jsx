@@ -61,6 +61,9 @@ function TgWebAppJiraAccs({loginPath}){
             .then(response => response.json())
             .then((data) => {
                 setJiraAccounts(data)
+            })
+            .catch(error => {
+                setErrorMessage(`Error: ${error}`)
             });
     }
 
@@ -72,7 +75,6 @@ function TgWebAppJiraAccs({loginPath}){
     }, [])
 
     React.useEffect(() => {
-        // On page ready
         fetchJiraAccounts()
     }, [initData])
 
@@ -89,6 +91,8 @@ function TgWebAppJiraAccs({loginPath}){
     const getJiraAccountsJSX = () => {
         return (
             <div className="w-full">
+                InitDataTg: {Telegram.WebApp.initData}
+                InitDataState: {initData}
                 {getErrorMessageJSX()}
                 {
                     jiraAccounts.map((jiraAccount) => (
