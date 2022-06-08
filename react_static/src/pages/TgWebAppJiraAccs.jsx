@@ -68,7 +68,6 @@ function TgWebAppJiraAccs({loginPath}){
         // On page ready
         Telegram.WebApp.ready()
         verifyInitData(Telegram.WebApp.initData)
-        fetchJiraAccounts()
         Telegram.WebApp.onEvent('mainButtonClicked', mainButtonClickHandler)
     }, [])
 

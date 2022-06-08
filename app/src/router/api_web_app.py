@@ -31,7 +31,7 @@ class JiraAccountResponseModel(BaseModel):
 
 @router.get(f"/jira_accounts", tags=["TelegramWebApp"], response_model=List[JiraAccountResponseModel])
 async def get_jira_accounts(
-    init_data: str = Header(default=None)
+    init_data: str = Header()
 ):
     """
 
