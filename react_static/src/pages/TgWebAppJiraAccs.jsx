@@ -35,11 +35,20 @@ function TgWebAppJiraAccs({loginPath}){
     })
     const [initData, setInitData] = React.useState(null)
     const [jiraAccounts, setJiraAccounts] = React.useState([])
+    const [errorMessage, setErrorMessage] = React.useState(null)
 
-    const verifyInitData = () => {
-        fetch(`/web_app/verify_init_data?init_data=${initData}`)
+    const verifyInitData = (initData) => {
+        fetch(`/web_app/verify_init_data?init_data=${initData}`, {
+            method: "GET",
+        })
           .then(response => response.json())
-          .then(data => setUser(data));
+          .then((data) => {
+              setInitData(initData)
+              setUser(data)
+          })
+          .catch(error => {
+              setErrorMessage(`Error: ${error}`)
+          });
     }
 
     const fetchJiraAccounts = () => {
@@ -58,20 +67,30 @@ function TgWebAppJiraAccs({loginPath}){
     React.useEffect(() => {
         // On page ready
         Telegram.WebApp.ready()
-        setInitData(Telegram.WebApp.initData)
-        verifyInitData()
+        verifyInitData(Telegram.WebApp.initData)
         fetchJiraAccounts()
         Telegram.WebApp.onEvent('mainButtonClicked', mainButtonClickHandler)
     }, [])
 
+    React.useEffect(() => {
+        // On page ready
+        fetchJiraAccounts()
+    }, [initData])
 
     const mainButtonClickHandler = () => {
         
     }
 
+    const getErrorMessageJSX = () => {
+        return (
+            <div>{errorMessage}</div>
+        )
+    }
+
     const getJiraAccountsJSX = () => {
         return (
             <div className="w-full">
+                {getErrorMessageJSX()}
                 {
                     jiraAccounts.map((jiraAccount) => (
                         <div key={jiraAccount.id} className="flex flex-wrap flex-col">
