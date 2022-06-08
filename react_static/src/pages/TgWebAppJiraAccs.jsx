@@ -56,18 +56,19 @@ function TgWebAppJiraAccs({loginPath}){
     }
 
     const fetchJiraAccounts = () => {
+        let headers = {
+            "init-data": initData
+        }
         fetch('/web_app/jira_accounts', {
             method: "GET",
-            headers: {
-                "init-data": initData
-            }
+            headers: headers
         })
             .then(response => response.json())
             .then((data) => {
                 setJiraAccounts(data)
             })
             .catch(error => {
-                setErrorMessage(`Error: ${error}`)
+                setErrorMessage(`Headers: ${headers.toString()}`)
             });
     }
 

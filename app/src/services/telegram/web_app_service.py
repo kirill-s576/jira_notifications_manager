@@ -102,7 +102,7 @@ class WebAppAsyncService:
     async def get_jira_accounts(self, mongo_session: MongoSession = None) -> List[JiraAccountRead]:
         user_id = self.verified_init_data.safe_init_data_object.user.id
         user_manager = UserAsyncMongoManager(mongo_session)
-        user = await user_manager.get_user_by_telegram_chat_id(user_id)
+        user = await user_manager.get_user_by_telegram_chat_id(str(user_id))
         db_manager = JiraAccountAsyncMongoManager(mongo_session)
         accounts = await db_manager.get_user_accounts(user_id=str(user.id))
         return accounts
