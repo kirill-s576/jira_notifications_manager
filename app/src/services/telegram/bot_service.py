@@ -79,7 +79,7 @@ class JiraBotAsyncService(CustomBot):
     @staticmethod
     def _get_settings_web_app_menu_button() -> types.MenuButtonWebApp:
         web_app = types.WebAppInfo(
-            url="https://k.dserdiuk.com/web_app/jira_accounts"
+            url="https://k.dserdiuk.com/telegram/jira_accs"
         )
         menu_button = types.MenuButtonWebApp(
             text="App",
