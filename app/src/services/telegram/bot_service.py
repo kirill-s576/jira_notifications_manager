@@ -27,7 +27,7 @@ class JiraBotAsyncService(CustomBot):
         super().__init__(token)
 
     async def send_welcome_message_with_regular_menu(self, chat_id: str):
-        await self.bot.set_accounts_settings_web_app()
+        await self.set_accounts_settings_web_app(chat_id=chat_id)
         await self.bot.send_message(
             chat_id=chat_id,
             text="Welcome to Jira Notifications Bot",
