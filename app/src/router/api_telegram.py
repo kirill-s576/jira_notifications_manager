@@ -1,10 +1,8 @@
-from fastapi import APIRouter, Request, Depends
+from fastapi import APIRouter, Request, Body
 from fastapi.responses import PlainTextResponse, JSONResponse
-from settings import WS_MESSAGE_BUS, APP_CONFIG
-from src.utils.message_bus import BusMessage
+from settings import APP_CONFIG
 from src.services.telegram.bot_service import JiraBotAsyncService
 import json
-from src.database.client import with_new_async_mongo_session
 
 
 router = APIRouter(prefix="/telegram")
@@ -55,3 +53,16 @@ async def webhook_info():
         f"{APP_CONFIG.TELEGRAM_BOT_TOKEN}", "<BOT_TOKEN>"
     )
     return JSONResponse(response_dict, status_code=200)
+
+
+@router.post(f"/emulate_tg_webhook", tags=["General"])
+async def test_endpoint(
+    telegram_webhook: dict = Body()
+):
+    """
+
+    """
+    service = JiraBotAsyncService(APP_CONFIG.TELEGRAM_BOT_TOKEN)
+    await service.process_update(telegram_webhook)
+    r = {}
+    return JSONResponse(r, status_code=200)

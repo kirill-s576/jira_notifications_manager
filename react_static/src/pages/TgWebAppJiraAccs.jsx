@@ -25,31 +25,80 @@ class TelegramUser {
 }
 
 function TgWebAppJiraAccs({loginPath}){
-    const user = new TelegramUser(Telegram.WebApp.initDataUnsafe.user)
-    
+
+    const [user, setUser] = React.useState({
+        id: null,
+        first_name: null,
+        last_name: null,
+        username: null,
+        language_code: null
+    })
+    const [initData, setInitData] = React.useState(null)
+    const [jiraAccounts, setJiraAccounts] = React.useState([])
+
+    const verifyInitData = () => {
+        fetch(`/web_app/verify_init_data?init_data=${initData}`)
+          .then(response => response.json())
+          .then(data => setUser(data));
+    }
+
+    const fetchJiraAccounts = () => {
+        fetch('/web_app/jira_accounts', {
+            method: "GET",
+            headers: {
+                "init-data": initData
+            }
+        })
+            .then(response => response.json())
+            .then((data) => {
+                setJiraAccounts(data)
+            });
+    }
+
     React.useEffect(() => {
         // On page ready
         Telegram.WebApp.ready()
+        setInitData(Telegram.WebApp.initData)
+        verifyInitData()
+        fetchJiraAccounts()
         Telegram.WebApp.onEvent('mainButtonClicked', mainButtonClickHandler)
     }, [])
+
 
     const mainButtonClickHandler = () => {
         
     }
 
-    const addAccoutClick = () => {
-        window.location.href = loginPath;
+    const getJiraAccountsJSX = () => {
+        return (
+            <div className="w-full">
+                {
+                    jiraAccounts.map((jiraAccount) => (
+                        <div key={jiraAccount.id} className="flex flex-wrap flex-col">
+                            <div className="container h-screen max-w-full">
+                                <div
+                                    className="m-auto my-28 w-96 max-w-lg items-center justify-center overflow-hidden rounded-2xl bg-slate-200 shadow-xl">
+                                    <div className="h-24 bg-white"></div>
+                                    <div className="-mt-20 flex justify-center">
+                                        <img className="h-32 rounded-full"
+                                             src={jiraAccount.avatar_url}/>
+                                    </div>
+                                    <div className="mt-5 mb-1 px-3 text-center text-lg">{jiraAccount.resource_name}</div>
+                                    <div className="mb-5 px-3 text-center text-sky-500">
+                                        <a href={jiraAccount.resource_url}>Link</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+        )
     }
 
     return (
         <div style={{ backgroundColor: "var(--tg-theme-bg-color)", minHeight:"var(--tg-viewport-height)"}}>
-            <button type="button"
-                    onClick={addAccoutClick}
-                    className="tg-button-color rounded-lg text-sm px-5 py-2.5 text-center w-96"
-            >
-                Add new account
-            </button>
-
+            {getJiraAccountsJSX()}
         </div>
     )
 }

@@ -5,7 +5,7 @@ from src.router import (
     jira_auth,
     html,
     api_telegram,
-    api_general
+    api_web_app
 )
 
 
@@ -21,11 +21,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 # Include routers.
 app.include_router(html.router)
 app.include_router(jira_auth.router)
 app.include_router(websocket.router)
 app.include_router(api_telegram.router)
-app.include_router(api_general.router)
-
+app.include_router(api_web_app.router)
