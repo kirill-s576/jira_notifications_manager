@@ -45,6 +45,7 @@ function TgWebAppJiraAccs({loginPath}){
           .then((data) => {
               setInitData(initData)
               setUser(data)
+              fetchJiraAccounts()
           })
           .catch(error => {
               setErrorMessage(`Error: ${error}`)
@@ -75,7 +76,7 @@ function TgWebAppJiraAccs({loginPath}){
     }, [])
 
     React.useEffect(() => {
-        fetchJiraAccounts()
+
     }, [initData])
 
     const mainButtonClickHandler = () => {
