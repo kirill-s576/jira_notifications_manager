@@ -38,7 +38,10 @@ function TgWebAppJiraAccs({loginPath}){
     const [errorMessage, setErrorMessage] = React.useState(null)
 
     const verifyInitData = (initData) => {
-        fetch(`/web_app/verify_init_data?init_data=${initData}`, {
+        let queryParams = new URLSearchParams({
+            init_data: initData
+        })
+        fetch("/web_app/verify_init_data?" + queryParams, {
             method: "GET",
         })
           .then(response => response.json())
