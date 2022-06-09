@@ -99,7 +99,7 @@ function TgWebAppJiraAccs({loginPath}){
             <div className="w-full flex flex-wrap flex-col">
                 {
                     jiraAccounts.map((jiraAccount) => (
-                        <div key={jiraAccount.id} className="container h-screen max-w-full">
+                        <div key={jiraAccount.id} className="container max-w-full">
                             <div
                                 className="m-auto my-28 w-96 max-w-lg items-center justify-center overflow-hidden rounded-2xl bg-slate-200 shadow-xl">
                                 <div className="h-24 bg-white"></div>
@@ -117,7 +117,7 @@ function TgWebAppJiraAccs({loginPath}){
                 }
                 {
                     jiraAccounts.map((jiraAccount) => (
-                        <div key={jiraAccount.id} className="container h-screen max-w-full">
+                        <div key={jiraAccount.id} className="container max-w-full">
                             <div
                                 className="m-auto my-28 w-96 max-w-lg items-center justify-center overflow-hidden rounded-2xl bg-slate-200 shadow-xl">
                                 <div className="h-24 bg-white"></div>
