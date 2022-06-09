@@ -72,9 +72,9 @@ function TgWebAppJiraAccs({loginPath}){
             });
     }
 
-    const addNewAccountTrigger = (initData) => {
+    const addNewAccountTrigger = () => {
         let headers = {
-            "init-data": initData
+            "init-data": verifiedInitData
         }
         fetch('/web_app/jira_accounts', {
             method: "POST",
@@ -106,7 +106,7 @@ function TgWebAppJiraAccs({loginPath}){
     }, [verifiedInitData])
 
     const mainButtonClickHandler = () => {
-        addNewAccountTrigger(verifiedInitData)
+        addNewAccountTrigger()
     }
 
     const getErrorMessageJSX = () => {
