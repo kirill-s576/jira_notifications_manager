@@ -96,7 +96,7 @@ function TgWebAppJiraAccs({loginPath}){
 
     const getJiraAccountsJSX = () => {
         return (
-            <div className="w-full flex flex-wrap flex-col">
+            <div className="w-full flex flex-wrap flex-row">
                 {
                     jiraAccounts.concat(jiraAccounts, jiraAccounts, jiraAccounts).map((jiraAccount) => (
                         <div key={jiraAccount.id} className="container w-80 m-auto mt-5 mb-5">
@@ -120,7 +120,7 @@ function TgWebAppJiraAccs({loginPath}){
     }
 
     return (
-        <div style={{ backgroundColor: "var(--tg-theme-bg-color)", minHeight:"var(--tg-viewport-height)"}}>
+        <div style={{ minHeight:"var(--tg-viewport-height)"}}>
             {getErrorMessageJSX()}
             {getJiraAccountsJSX()}
         </div>
