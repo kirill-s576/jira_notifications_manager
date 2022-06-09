@@ -110,11 +110,11 @@ function TgWebAppJiraAccs({loginPath}){
                                 className="my-5 w-full items-center justify-center overflow-hidden rounded-2xl bg-slate-200 shadow-xl"
                             >
                                 <div className="h-24 bg-white"></div>
-                                <div className="-mt-25 ml-5 flex justify-start">
+                                <div className="-mt-20 ml-5 flex justify-start">
                                     <img className="h-32 rounded-full"
                                          src={jiraAccount.avatar_url}/>
                                 </div>
-                                <div className="-mt-30 flex mr-5 justify-end text-black">
+                                <div className="-mt-5 flex mr-5 justify-end text-black">
                                     <p>{jiraAccount.resource_name}</p>
                                 </div>
                                 <div className="mt-5 mb-1 px-3 text-center text-lg">
