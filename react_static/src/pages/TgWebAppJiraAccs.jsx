@@ -98,46 +98,10 @@ function TgWebAppJiraAccs({loginPath}){
         return (
             <div className="w-full flex flex-wrap flex-col">
                 {
-                    jiraAccounts.map((jiraAccount) => (
-                        <div key={jiraAccount.id} className="container max-w-full">
+                    jiraAccounts.concat(jiraAccounts, jiraAccounts, jiraAccounts).map((jiraAccount) => (
+                        <div key={jiraAccount.id} className="container w-80 ml-10 mr-10">
                             <div
-                                className="m-auto my-28 w-96 max-w-lg items-center justify-center overflow-hidden rounded-2xl bg-slate-200 shadow-xl">
-                                <div className="h-24 bg-white"></div>
-                                <div className="-mt-20 flex justify-center">
-                                    <img className="h-32 rounded-full"
-                                         src={jiraAccount.avatar_url}/>
-                                </div>
-                                <div className="mt-5 mb-1 px-3 text-center text-lg">{jiraAccount.resource_name}</div>
-                                <div className="mb-5 px-3 text-center text-sky-500">
-                                    <a href={jiraAccount.resource_url}>Link</a>
-                                </div>
-                            </div>
-                        </div>
-                    ))
-                }
-                {
-                    jiraAccounts.map((jiraAccount) => (
-                        <div key={jiraAccount.id} className="container max-w-full ml-5 mr-5">
-                            <div
-                                className="m-auto my-28 w-96 max-w-lg items-center justify-center overflow-hidden rounded-2xl bg-slate-200 shadow-xl">
-                                <div className="h-24 bg-white"></div>
-                                <div className="-mt-20 flex justify-center">
-                                    <img className="h-32 rounded-full"
-                                         src={jiraAccount.avatar_url}/>
-                                </div>
-                                <div className="mt-5 mb-1 px-3 text-center text-lg">{jiraAccount.resource_name}</div>
-                                <div className="mb-5 px-3 text-center text-sky-500">
-                                    <a href={jiraAccount.resource_url}>Link</a>
-                                </div>
-                            </div>
-                        </div>
-                    ))
-                }
-                {
-                    jiraAccounts.map((jiraAccount) => (
-                        <div key={jiraAccount.id} className="container max-w-full">
-                            <div
-                                className="m-auto my-28 w-96 max-w-lg items-center justify-center overflow-hidden rounded-2xl bg-slate-200 shadow-xl">
+                                className="m-auto my-28 w-full items-center justify-center overflow-hidden rounded-2xl bg-slate-200 shadow-xl">
                                 <div className="h-24 bg-white"></div>
                                 <div className="-mt-20 flex justify-center">
                                     <img className="h-32 rounded-full"
