@@ -154,7 +154,7 @@ function TgWebAppJiraAccs({loginPath}){
         <div style={{ minHeight:"var(--tg-viewport-height)"}}>
             {getErrorMessageJSX()}
             {
-                jiraAccounts.length() ? getJiraAccountsJSX() : getEmptyJiraAccountsJsx()
+                jiraAccounts.length > 0 ? getJiraAccountsJSX() : getEmptyJiraAccountsJsx()
             }
         </div>
     )
