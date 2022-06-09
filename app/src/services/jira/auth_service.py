@@ -56,7 +56,7 @@ class JiraAuthAsyncService:
         user: UserReadModel = await self._get_db_user_by_state(user_state)
         for resource in accessible_resources:
             await self.save_accessible_resource(
-                user_id=user.id,
+                user_id=str(user.id),
                 token=token_object,
                 resource=resource
             )
