@@ -28,11 +28,37 @@ class Settings(BaseSettings):
         "offline_access"
     ]
 
-    class Config:
-        env_file = "/Users/kirill/own_projects/jira_notifications_manager/.env"
-
 
 APP_CONFIG = Settings()
 WS_MESSAGE_BUS = AsyncMessageBus()
 
 SERVER_HTTP_PROTOCOL = "http" if not APP_CONFIG.SERVER_SSL else "https"
+
+
+class LogConfig(BaseSettings):
+    """Logging configuration to be set for the server"""
+
+    LOGGER_NAME: str = "jira_bot_app"
+    LOG_FORMAT: str = "%(levelprefix)s | %(asctime)s | %(message)s"
+    LOG_LEVEL: str = "DEBUG"
+
+    # Logging config
+    version = 1
+    disable_existing_loggers = False
+    formatters = {
+        "default": {
+            "()": "uvicorn.logging.DefaultFormatter",
+            "fmt": LOG_FORMAT,
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        },
+    }
+    handlers = {
+        "default": {
+            "formatter": "default",
+            "class": "logging.StreamHandler",
+            "stream": "ext://sys.stderr",
+        },
+    }
+    loggers = {
+        "jira_bot_app": {"handlers": ["default"], "level": LOG_LEVEL},
+    }

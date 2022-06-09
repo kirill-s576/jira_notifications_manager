@@ -9,6 +9,12 @@ from src.database.models.jira_account import JiraAccountRead
 from src.database.client import with_new_async_mongo_session, MongoSession
 from src.database.managers.jira_account import JiraAccountAsyncMongoManager
 from src.database.managers.user import UserAsyncMongoManager
+from src.database.models.user import UserReadModel
+from settings import LogConfig
+import logging
+
+
+logger = logging.getLogger(LogConfig().LOGGER_NAME)
 
 
 class WebAppUser(BaseModel):
@@ -98,12 +104,23 @@ class WebAppAsyncService:
             raise Exception("Unverified WebApp data")
         return chs
 
+    @staticmethod
+    async def _get_current_user(chat_id: str, mongo_session: MongoSession) -> UserReadModel:
+        user_manager = UserAsyncMongoManager(mongo_session)
+        user = await user_manager.get_user_by_telegram_chat_id(str(chat_id))
+        logger.debug(f"WebAppAsyncService._get_current_user TG User: {chat_id}. Db User: {user.id}")
+        return user
+
+    @staticmethod
+    async def _get_user_jira_accounts(user_id: str, mongo_session: MongoSession) -> List[JiraAccountRead]:
+        db_manager = JiraAccountAsyncMongoManager(mongo_session)
+        accounts = await db_manager.get_user_accounts(user_id=str(user_id))
+        logger.debug(f"WebAppAsyncService._get_user_jira_accounts Db User: {user_id}. Accounts: {accounts}")
+        return accounts
+
     @with_new_async_mongo_session()
     async def get_jira_accounts(self, mongo_session: MongoSession = None) -> List[JiraAccountRead]:
         user_id = self.verified_init_data.safe_init_data_object.user.id
-        # user_manager = UserAsyncMongoManager(mongo_session)
-        # user = await user_manager.get_user_by_telegram_chat_id(str(user_id))
-        db_manager = JiraAccountAsyncMongoManager(mongo_session)
-        accounts = await db_manager.get_user_accounts(user_id=str(user_id))
-        print(accounts)
+        user = await self._get_current_user(user_id, mongo_session)
+        accounts = await self._get_user_jira_accounts(user.id, mongo_session)
         return accounts

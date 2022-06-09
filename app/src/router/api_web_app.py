@@ -36,6 +36,7 @@ async def get_jira_accounts(
     """
 
     """
+
     service = WebAppAsyncService(
         init_data=init_data,
         bot_token=APP_CONFIG.TELEGRAM_BOT_TOKEN

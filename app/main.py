@@ -7,7 +7,11 @@ from src.router import (
     api_telegram,
     api_web_app
 )
+from logging.config import dictConfig as loadLoggingConfig
+from settings import LogConfig
 
+
+loadLoggingConfig(LogConfig().dict())
 
 app = FastAPI()
 

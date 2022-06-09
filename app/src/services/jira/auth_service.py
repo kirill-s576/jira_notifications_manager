@@ -30,13 +30,13 @@ class JiraAuthAsyncService:
         user_id: str,
         token: JiraToken,
         resource: dict,
-        mongo_session: MongoSession
+        mongo_session: MongoSession = None
     ):
         jira_account = self.__get_account_model(user_id, token, resource)
         jira_account_manager = JiraAccountAsyncMongoManager(mongo_session)
         await jira_account_manager.get_and_replace_or_create_account(jira_account)
 
-    async def confirm_oauth(self, code: str, user_state: str, mongo_session: MongoSession):
+    async def confirm_oauth(self, code: str, user_state: str, mongo_session: MongoSession = None):
         """
         Creates new account and returns redirect url.
         """
