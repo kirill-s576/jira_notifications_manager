@@ -36,6 +36,8 @@ function TgWebAppJiraAccs({loginPath}){
     const [verifiedInitData, setVerifiedInitData] = React.useState(null)
     const [jiraAccounts, setJiraAccounts] = React.useState([])
     const [errorMessage, setErrorMessage] = React.useState(null)
+    const [mainButtonClicked, setMainButtonClicked] = React.useState(false)
+
 
     const verifyInitData = (unverifiedInitData) => {
         let queryParams = new URLSearchParams({
@@ -85,7 +87,7 @@ function TgWebAppJiraAccs({loginPath}){
         })
             .then(response => response.json())
             .then((data) => {
-                Telegram.WebApp.close()
+                console.log(data)
             })
             .catch(error => {
                 setErrorMessage(`Headers: ${error}`)
@@ -104,6 +106,7 @@ function TgWebAppJiraAccs({loginPath}){
     React.useEffect(() => {
         if (verifiedInitData && verifiedInitData !== "UNVERIFIED"){
             fetchJiraAccounts(verifiedInitData)
+            Telegram.WebApp.onEvent('mainButtonClicked', mainButtonClick)
         }
     }, [verifiedInitData])
 
@@ -116,8 +119,15 @@ function TgWebAppJiraAccs({loginPath}){
         )
     }
 
+    const mainButtonClick = () => {
+        if (!mainButtonClicked) {
+            addNewAccountTrigger()
+        }
+        Telegram.WebApp.close()
+    }
+
     const getJiraAccountsJSX = () => {
-        Telegram.WebApp.onEvent('mainButtonClicked', addNewAccountTrigger)
+
         return (
             <div className="w-full flex flex-wrap flex-row">
                 <h3>Your accounts:</h3>
@@ -144,7 +154,6 @@ function TgWebAppJiraAccs({loginPath}){
     }
 
     const getEmptyJiraAccountsJsx = () => {
-        Telegram.WebApp.onEvent('mainButtonClicked', addNewAccountTrigger)
         return (
             <div style={{ color: "var(--tg-theme-text-color)" }}>
                 <h3>No one account connected...</h3>
