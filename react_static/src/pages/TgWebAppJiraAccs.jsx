@@ -142,19 +142,17 @@ function TgWebAppJiraAccs({loginPath}){
         Telegram.WebApp.MainButton.show()
         return (
             <div style={{ color: "var(--tg-theme-text-color)" }}>
-                <h3></h3>
+                <h3>No one account connected...</h3>
             </div>
         )
     }
 
     return (
         <div style={{ minHeight:"var(--tg-viewport-height)"}}>
+            {getErrorMessageJSX()}
             {
                 jiraAccounts.length() ? getJiraAccountsJSX() : getEmptyJiraAccountsJsx()
             }
-            }
-            {getErrorMessageJSX()}
-            {getJiraAccountsJSX()}
         </div>
     )
 }
