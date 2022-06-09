@@ -72,7 +72,7 @@ function TgWebAppJiraAccs({loginPath}){
             });
     }
 
-    const addNewAccountTrigger = () => {
+    const addNewAccountTrigger = (initData) => {
         let headers = {
             "init-data": initData
         }
@@ -93,6 +93,9 @@ function TgWebAppJiraAccs({loginPath}){
         // On page ready
         Telegram.WebApp.ready()
         verifyInitData(Telegram.WebApp.initData)
+        Telegram.WebApp.MainButton.enable()
+        Telegram.WebApp.MainButton.setText("Add Account")
+        Telegram.WebApp.MainButton.show()
         Telegram.WebApp.onEvent('mainButtonClicked', mainButtonClickHandler)
     }, [])
 
@@ -103,7 +106,7 @@ function TgWebAppJiraAccs({loginPath}){
     }, [initData])
 
     const mainButtonClickHandler = () => {
-        addNewAccountTrigger()
+        addNewAccountTrigger(initData)
     }
 
     const getErrorMessageJSX = () => {
@@ -140,9 +143,6 @@ function TgWebAppJiraAccs({loginPath}){
     }
 
     const getEmptyJiraAccountsJsx = () => {
-        Telegram.WebApp.MainButton.enable()
-        Telegram.WebApp.MainButton.setText("Add Account")
-        Telegram.WebApp.MainButton.show()
         return (
             <div style={{ color: "var(--tg-theme-text-color)" }}>
                 <h3>No one account connected...</h3>
@@ -153,9 +153,7 @@ function TgWebAppJiraAccs({loginPath}){
     return (
         <div style={{ minHeight:"var(--tg-viewport-height)"}}>
             {getErrorMessageJSX()}
-            {
-                jiraAccounts.length > 0 ? getJiraAccountsJSX() : getEmptyJiraAccountsJsx()
-            }
+            {jiraAccounts.length > 0 ? getJiraAccountsJSX() : getEmptyJiraAccountsJsx()}
         </div>
     )
 }
