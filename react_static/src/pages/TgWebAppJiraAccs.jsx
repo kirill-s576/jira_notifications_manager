@@ -125,6 +125,9 @@ function TgWebAppJiraAccs({loginPath}){
     return (
         <div style={{ backgroundColor: "var(--tg-theme-bg-color)", minHeight:"var(--tg-viewport-height)"}}>
             {getJiraAccountsJSX()}
+            {getJiraAccountsJSX()}
+            {getJiraAccountsJSX()}
+            {getJiraAccountsJSX()}
         </div>
     )
 }
