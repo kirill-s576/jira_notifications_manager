@@ -151,7 +151,10 @@ function TgWebAppJiraAccs({loginPath}){
     }
 
     return (
-        <div style={{ minHeight:"var(--tg-viewport-height)"}}>
+        <div style={{ color: "var(--tg-theme-text-color)", minHeight:"var(--tg-viewport-height)"}}>
+            <div>
+                InitData: {verifiedInitData}
+            </div>
             {getErrorMessageJSX()}
             {jiraAccounts.length > 0 ? getJiraAccountsJSX() : getEmptyJiraAccountsJsx()}
         </div>
