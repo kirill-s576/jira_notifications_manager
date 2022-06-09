@@ -6,6 +6,11 @@ from typing import Optional
 
 from settings import APP_CONFIG
 from src.services.telegram.web_app_service import WebAppAsyncService, WebAppUser
+from logging import getLogger
+from settings import LogConfig
+
+
+logger = getLogger(LogConfig().LOGGER_NAME)
 
 
 router = APIRouter(prefix="/web_app")
@@ -53,6 +58,7 @@ async def get_jira_accounts(
 async def add_new_jira_account(
     init_data: str = Header()
 ):
+    logger.debug(f"add_new_jira_account:INIT_DATA: {init_data}")
     web_app_service = WebAppAsyncService(
         init_data=init_data,
         bot_token=APP_CONFIG.TELEGRAM_BOT_TOKEN
