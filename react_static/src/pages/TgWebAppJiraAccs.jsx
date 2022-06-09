@@ -48,7 +48,6 @@ function TgWebAppJiraAccs({loginPath}){
           .then((data) => {
               setVerifiedInitData(unverifiedInitData)
               setUser(data)
-              Telegram.WebApp.onEvent('mainButtonClicked', mainButtonClickHandler)
           })
           .catch(error => {
               setVerifiedInitData("UNVERIFIED")
@@ -105,11 +104,8 @@ function TgWebAppJiraAccs({loginPath}){
         }
     }, [verifiedInitData])
 
-    const mainButtonClickHandler = () => {
-        addNewAccountTrigger()
-    }
-
     const getErrorMessageJSX = () => {
+
         return (
             <div style={{ color: "var(--tg-theme-text-color)" }}>
                 {errorMessage}
@@ -118,6 +114,7 @@ function TgWebAppJiraAccs({loginPath}){
     }
 
     const getJiraAccountsJSX = () => {
+        Telegram.WebApp.onEvent('mainButtonClicked', addNewAccountTrigger)
         return (
             <div className="w-full flex flex-wrap flex-row">
                 {
@@ -143,6 +140,7 @@ function TgWebAppJiraAccs({loginPath}){
     }
 
     const getEmptyJiraAccountsJsx = () => {
+        Telegram.WebApp.onEvent('mainButtonClicked', addNewAccountTrigger)
         return (
             <div style={{ color: "var(--tg-theme-text-color)" }}>
                 <h3>No one account connected...</h3>
