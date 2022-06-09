@@ -48,6 +48,7 @@ function TgWebAppJiraAccs({loginPath}){
           .then((data) => {
               setVerifiedInitData(unverifiedInitData)
               setUser(data)
+              Telegram.WebApp.onEvent('mainButtonClicked', mainButtonClickHandler)
           })
           .catch(error => {
               setVerifiedInitData("UNVERIFIED")
@@ -96,7 +97,6 @@ function TgWebAppJiraAccs({loginPath}){
         Telegram.WebApp.MainButton.enable()
         Telegram.WebApp.MainButton.setText("Add Account")
         Telegram.WebApp.MainButton.show()
-        Telegram.WebApp.onEvent('mainButtonClicked', mainButtonClickHandler)
     }, [])
 
     React.useEffect(() => {
