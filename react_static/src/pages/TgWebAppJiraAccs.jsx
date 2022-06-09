@@ -99,9 +99,9 @@ function TgWebAppJiraAccs({loginPath}){
             <div className="w-full flex flex-wrap flex-row">
                 {
                     jiraAccounts.concat(jiraAccounts, jiraAccounts, jiraAccounts).map((jiraAccount) => (
-                        <div key={jiraAccount.id} className="container w-80 ml-10 mb-5 mt-5">
+                        <div key={jiraAccount.id} className="container w-80 m-auto">
                             <div
-                                className="my-28 w-full items-center justify-center overflow-hidden rounded-2xl bg-slate-200 shadow-xl">
+                                className="w-full items-center justify-center overflow-hidden rounded-2xl bg-slate-200 shadow-xl">
                                 <div className="h-24 bg-white"></div>
                                 <div className="-mt-20 flex justify-center">
                                     <img className="h-32 rounded-full"
