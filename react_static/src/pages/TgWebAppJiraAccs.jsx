@@ -96,23 +96,56 @@ function TgWebAppJiraAccs({loginPath}){
 
     const getJiraAccountsJSX = () => {
         return (
-            <div className="w-full">
-                {getErrorMessageJSX()}
+            <div className="w-full flex flex-wrap flex-col">
                 {
                     jiraAccounts.map((jiraAccount) => (
-                        <div key={jiraAccount.id} className="flex flex-wrap flex-col">
-                            <div className="container h-screen max-w-full">
-                                <div
-                                    className="m-auto my-28 w-96 max-w-lg items-center justify-center overflow-hidden rounded-2xl bg-slate-200 shadow-xl">
-                                    <div className="h-24 bg-white"></div>
-                                    <div className="-mt-20 flex justify-center">
-                                        <img className="h-32 rounded-full"
-                                             src={jiraAccount.avatar_url}/>
-                                    </div>
-                                    <div className="mt-5 mb-1 px-3 text-center text-lg">{jiraAccount.resource_name}</div>
-                                    <div className="mb-5 px-3 text-center text-sky-500">
-                                        <a href={jiraAccount.resource_url}>Link</a>
-                                    </div>
+                        <div key={jiraAccount.id} className="container h-screen max-w-full">
+                            <div
+                                className="m-auto my-28 w-96 max-w-lg items-center justify-center overflow-hidden rounded-2xl bg-slate-200 shadow-xl">
+                                <div className="h-24 bg-white"></div>
+                                <div className="-mt-20 flex justify-center">
+                                    <img className="h-32 rounded-full"
+                                         src={jiraAccount.avatar_url}/>
+                                </div>
+                                <div className="mt-5 mb-1 px-3 text-center text-lg">{jiraAccount.resource_name}</div>
+                                <div className="mb-5 px-3 text-center text-sky-500">
+                                    <a href={jiraAccount.resource_url}>Link</a>
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                }
+                {
+                    jiraAccounts.map((jiraAccount) => (
+                        <div key={jiraAccount.id} className="container h-screen max-w-full">
+                            <div
+                                className="m-auto my-28 w-96 max-w-lg items-center justify-center overflow-hidden rounded-2xl bg-slate-200 shadow-xl">
+                                <div className="h-24 bg-white"></div>
+                                <div className="-mt-20 flex justify-center">
+                                    <img className="h-32 rounded-full"
+                                         src={jiraAccount.avatar_url}/>
+                                </div>
+                                <div className="mt-5 mb-1 px-3 text-center text-lg">{jiraAccount.resource_name}</div>
+                                <div className="mb-5 px-3 text-center text-sky-500">
+                                    <a href={jiraAccount.resource_url}>Link</a>
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                }
+                {
+                    jiraAccounts.map((jiraAccount) => (
+                        <div key={jiraAccount.id} className="container h-screen max-w-full">
+                            <div
+                                className="m-auto my-28 w-96 max-w-lg items-center justify-center overflow-hidden rounded-2xl bg-slate-200 shadow-xl">
+                                <div className="h-24 bg-white"></div>
+                                <div className="-mt-20 flex justify-center">
+                                    <img className="h-32 rounded-full"
+                                         src={jiraAccount.avatar_url}/>
+                                </div>
+                                <div className="mt-5 mb-1 px-3 text-center text-lg">{jiraAccount.resource_name}</div>
+                                <div className="mb-5 px-3 text-center text-sky-500">
+                                    <a href={jiraAccount.resource_url}>Link</a>
                                 </div>
                             </div>
                         </div>
@@ -124,9 +157,7 @@ function TgWebAppJiraAccs({loginPath}){
 
     return (
         <div style={{ backgroundColor: "var(--tg-theme-bg-color)", minHeight:"var(--tg-viewport-height)"}}>
-            {getJiraAccountsJSX()}
-            {getJiraAccountsJSX()}
-            {getJiraAccountsJSX()}
+            {getErrorMessageJSX()}
             {getJiraAccountsJSX()}
         </div>
     )
