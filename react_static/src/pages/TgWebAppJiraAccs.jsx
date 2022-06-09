@@ -117,6 +117,7 @@ function TgWebAppJiraAccs({loginPath}){
         Telegram.WebApp.onEvent('mainButtonClicked', addNewAccountTrigger)
         return (
             <div className="w-full flex flex-wrap flex-row">
+                <h3>Your accounts:</h3>
                 {
                     jiraAccounts.concat(jiraAccounts, jiraAccounts, jiraAccounts).map((jiraAccount) => (
                         <div key={jiraAccount.id} className="container w-80 mx-auto">
@@ -150,9 +151,6 @@ function TgWebAppJiraAccs({loginPath}){
 
     return (
         <div style={{ color: "var(--tg-theme-text-color)", minHeight:"var(--tg-viewport-height)"}}>
-            <div>
-                InitData: {verifiedInitData}
-            </div>
             {getErrorMessageJSX()}
             {jiraAccounts.length > 0 ? getJiraAccountsJSX() : getEmptyJiraAccountsJsx()}
         </div>

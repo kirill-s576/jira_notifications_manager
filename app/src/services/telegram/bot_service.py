@@ -9,6 +9,7 @@ from src.services.telegram.handlers import (
 from src.database.client import with_new_async_mongo_session, MongoSession
 from src.database.managers.jira_account import JiraAccountAsyncMongoManager
 from src.exceptions.telegram import TokenDoesNotAvailableException
+import asyncio
 
 
 class JiraBotAsyncService(CustomBot):
@@ -42,11 +43,13 @@ class JiraBotAsyncService(CustomBot):
 
     async def send_message_to_add_jira_account(self, chat_id: str):
         keyboard = self._get_auth_button_keyboard_markup(user_state=chat_id)
-        await self.bot.send_message(
+        message = await self.bot.send_message(
             chat_id=chat_id,
             text="Login with Jira",
             reply_markup=keyboard
         )
+        await asyncio.sleep(10)
+        await self.bot.delete_message(chat_id, message["message_id"])
 
     async def send_info_message(self, chat_id: str):
         await self.bot.send_message(
