@@ -1,29 +1,3 @@
-class TelegramUser {
-    constructor (telegramUserData) {
-        this.telegramUserData = telegramUserData
-    }
-
-    get id() {
-        return this.telegramUserData.id
-    }
-
-    get first_name() {
-        return this.telegramUserData.first_name
-    }
-
-    get last_name() {
-        return this.telegramUserData.last_name
-    }
-
-    get username() {
-        return this.telegramUserData.username
-    }
-    
-    get language_code() {
-        return this.telegramUserData.language_code
-    }
-}
-
 function TgWebAppJiraAccs({loginPath}){
 
     const [user, setUser] = React.useState({
@@ -106,12 +80,11 @@ function TgWebAppJiraAccs({loginPath}){
     React.useEffect(() => {
         if (verifiedInitData && verifiedInitData !== "UNVERIFIED"){
             fetchJiraAccounts(verifiedInitData)
-            Telegram.WebApp.onEvent('mainButtonClicked', mainButtonClick)
+            Telegram.WebApp.MainButton.onClick(mainButtonClick)
         }
     }, [verifiedInitData])
 
     const getErrorMessageJSX = () => {
-
         return (
             <div style={{ color: "var(--tg-theme-text-color)" }}>
                 {errorMessage}
@@ -127,23 +100,25 @@ function TgWebAppJiraAccs({loginPath}){
     }
 
     const getJiraAccountsJSX = () => {
-
         return (
             <div className="w-full flex flex-wrap flex-row">
-                <h3>Your accounts:</h3>
+                <h3 style={{color: "var(--tg-theme-text-color)"}}>Your accounts:</h3>
                 {
                     jiraAccounts.concat(jiraAccounts, jiraAccounts, jiraAccounts).map((jiraAccount) => (
                         <div key={jiraAccount.id} className="container w-80 mx-auto">
                             <div
-                                className="my-5 w-full items-center justify-center overflow-hidden rounded-2xl bg-slate-200 shadow-xl">
+                                className="my-5 w-full items-center justify-center overflow-hidden rounded-2xl bg-slate-200 shadow-xl"
+                            >
                                 <div className="h-24 bg-white"></div>
-                                <div className="-mt-20 flex justify-center">
+                                <div className="-mt-20 ml-10 flex justify-start">
                                     <img className="h-32 rounded-full"
                                          src={jiraAccount.avatar_url}/>
                                 </div>
-                                <div className="mt-5 mb-1 px-3 text-center text-lg">{jiraAccount.resource_name}</div>
-                                <div className="mb-5 px-3 text-center text-sky-500">
-                                    <a href={jiraAccount.resource_url}>Link</a>
+                                <div className="flex mr-10 justify-end text-black">
+                                    <p>{jiraAccount.resource_name}</p>
+                                </div>
+                                <div className="mt-5 mb-1 px-3 text-center text-lg">
+                                    {jiraAccount.resource_name}
                                 </div>
                             </div>
                         </div>
@@ -162,7 +137,7 @@ function TgWebAppJiraAccs({loginPath}){
     }
 
     return (
-        <div style={{ color: "var(--tg-theme-text-color)", minHeight:"var(--tg-viewport-height)"}}>
+        <div style={{ minHeight:"var(--tg-viewport-height)"}}>
             {getErrorMessageJSX()}
             {jiraAccounts.length > 0 ? getJiraAccountsJSX() : getEmptyJiraAccountsJsx()}
         </div>
