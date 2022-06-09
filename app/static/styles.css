@@ -13,6 +13,5 @@ html {
 }
 /* Optional: show position indicator in red */
 ::-webkit-scrollbar-thumb {
-    width: 2px;
-    background: var(--tg-theme-button-color);
+    background: #595959;
 }
