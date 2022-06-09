@@ -73,6 +73,23 @@ function TgWebAppJiraAccs({loginPath}){
             });
     }
 
+    const addNewAccountTrigger = () => {
+        let headers = {
+            "init-data": initData
+        }
+        fetch('/web_app/jira_accounts', {
+            method: "POST",
+            headers: headers
+        })
+            .then(response => response.json())
+            .then((data) => {
+                Telegram.WebApp.close()
+            })
+            .catch(error => {
+                setErrorMessage(`Headers: ${error}`)
+            });
+    }
+
     React.useEffect(() => {
         // On page ready
         Telegram.WebApp.ready()
@@ -85,7 +102,7 @@ function TgWebAppJiraAccs({loginPath}){
     }, [initData])
 
     const mainButtonClickHandler = () => {
-        
+        addNewAccountTrigger()
     }
 
     const getErrorMessageJSX = () => {
@@ -119,8 +136,23 @@ function TgWebAppJiraAccs({loginPath}){
         )
     }
 
+    const getEmptyJiraAccountsJsx = () => {
+        Telegram.WebApp.MainButton.enable()
+        Telegram.WebApp.MainButton.setText("Add Account")
+        Telegram.WebApp.MainButton.show()
+        return (
+            <div style={{ color: "var(--tg-theme-text-color)" }}>
+                <h3></h3>
+            </div>
+        )
+    }
+
     return (
         <div style={{ minHeight:"var(--tg-viewport-height)"}}>
+            {
+                jiraAccounts.length() ? getJiraAccountsJSX() : getEmptyJiraAccountsJsx()
+            }
+            }
             {getErrorMessageJSX()}
             {getJiraAccountsJSX()}
         </div>

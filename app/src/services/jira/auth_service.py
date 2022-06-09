@@ -12,6 +12,9 @@ from src.database.client import (
     MongoSession
 )
 from src.database.managers.jira_account import JiraAccountAsyncMongoManager
+from src.database.managers.user import UserAsyncMongoManager
+from src.database.models.user import UserReadModel
+from typing import Optional
 
 
 class JiraAuthAsyncService:
@@ -23,6 +26,12 @@ class JiraAuthAsyncService:
             redirect_uri=f"https://{APP_CONFIG.SERVER_HOST}/jira_auth/confirm_oauth",
             scope=APP_CONFIG.JIRA_AUTH_SCOPE_LIST
         )
+
+    @with_new_async_mongo_session()
+    async def _get_db_user_by_state(self, user_state: str, mongo_session: MongoSession) -> Optional[UserReadModel]:
+        user_manager = UserAsyncMongoManager(mongo_session)
+        user = await user_manager.get_user_by_telegram_chat_id(chat_id=user_state)
+        return user
 
     @with_new_async_mongo_session()
     async def save_accessible_resource(
@@ -44,9 +53,10 @@ class JiraAuthAsyncService:
         token_object = self.__get_token_model(auth_token_data)
         jira_api = JiraAsyncApi(token_object.access_token, token_object.refresh_token)
         accessible_resources = await jira_api.get_accessible_resources()
+        user: UserReadModel = await self._get_db_user_by_state(user_state)
         for resource in accessible_resources:
             await self.save_accessible_resource(
-                user_id=user_state,
+                user_id=user.id,
                 token=token_object,
                 resource=resource
             )

@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Header
+from fastapi.responses import JSONResponse
 from typing import List
 from pydantic import BaseModel
 from typing import Optional
@@ -46,3 +47,15 @@ async def get_jira_accounts(
         JiraAccountResponseModel(id=str(account.id), **account.dict(exclude={"id"})) for account in accounts
     ]
     return response
+
+
+@router.post(f"/jira_accounts", tags=["TelegramWebApp"])
+async def add_new_jira_account(
+    init_data: str = Header()
+):
+    web_app_service = WebAppAsyncService(
+        init_data=init_data,
+        bot_token=APP_CONFIG.TELEGRAM_BOT_TOKEN
+    )
+    await web_app_service.add_jira_account()
+    return JSONResponse({"msg": "Ok"}, status_code=200)

@@ -54,18 +54,6 @@ class JiraBotAsyncService(CustomBot):
             text="Info coming soon..."
         )
 
-    async def send_user_jira_accounts(self, chat_id: str):
-        accounts = await self._get_user_jira_accounts(chat_id=chat_id)
-        await self.bot.send_message(chat_id, "There are your accounts: ")
-        for account in accounts:
-            text = f"Id: {str(account.id)} \n" \
-                   f"Res.Name: {account.resource_name} \n" \
-                   f"Res. Id: {account.resource_id}"
-            await self.bot.send_message(
-                chat_id=chat_id,
-                text=text
-            )
-
     async def set_accounts_settings_web_app(self, chat_id: str):
         menu_button = self._get_settings_web_app_menu_button()
         await self.bot.set_chat_menu_button(
@@ -87,12 +75,6 @@ class JiraBotAsyncService(CustomBot):
         )
         return menu_button
 
-    @with_new_async_mongo_session()
-    async def _get_user_jira_accounts(self, chat_id: str, mongo_session: MongoSession):
-        db_manager = JiraAccountAsyncMongoManager(mongo_session)
-        accounts = await db_manager.get_user_accounts(user_id=str(chat_id))
-        return accounts
-
     @staticmethod
     def _get_auth_button_keyboard_markup(user_state: str) -> types.InlineKeyboardMarkup:
         keyboard = types.InlineKeyboardMarkup().add(
@@ -110,9 +92,6 @@ class JiraBotAsyncService(CustomBot):
                 [
                     types.KeyboardButton("--Info--"),
                     types.KeyboardButton("--Add account--")
-                ],
-                [
-                    types.KeyboardButton("--My accounts--"),
                 ]
             ],
             row_width=3,

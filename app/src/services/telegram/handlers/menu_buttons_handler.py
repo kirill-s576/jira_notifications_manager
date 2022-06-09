@@ -10,13 +10,6 @@ def menu_buttons_handler(dispatcher: Dispatcher, bot_service, **kwargs) -> Dispa
         """
         await bot_service.send_info_message(message.chat.id)
 
-    @dispatcher.message_handler(lambda message: message.text == "--My accounts--")
-    async def my_accounts(message: types.Message):
-        """
-        This handler will be called if  --My accounts-- menu button pressed.
-        """
-        await bot_service.send_user_jira_accounts(message.chat.id)
-
     @dispatcher.message_handler(lambda message: message.text == "--Add account--")
     async def add_account(message: types.Message):
         """

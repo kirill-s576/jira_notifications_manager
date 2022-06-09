@@ -12,6 +12,7 @@ from src.database.managers.user import UserAsyncMongoManager
 from src.database.models.user import UserReadModel
 from settings import LogConfig
 import logging
+from .bot_service import JiraBotAsyncService
 
 
 logger = logging.getLogger(LogConfig().LOGGER_NAME)
@@ -124,3 +125,11 @@ class WebAppAsyncService:
         user = await self._get_current_user(user_id, mongo_session)
         accounts = await self._get_user_jira_accounts(user.id, mongo_session)
         return accounts
+
+    async def add_jira_account(self):
+        bot_service = JiraBotAsyncService(
+            token=self._bot_token
+        )
+        await bot_service.send_message_to_add_jira_account(
+            chat_id=self.verified_init_data.safe_init_data_object.user.id
+        )
