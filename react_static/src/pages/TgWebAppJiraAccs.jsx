@@ -73,6 +73,9 @@ function TgWebAppJiraAccs({loginPath}){
     }
 
     const addNewAccountTrigger = () => {
+        if (!verifiedInitData) {
+            return
+        }
         let headers = {
             "init-data": verifiedInitData
         }
@@ -96,6 +99,7 @@ function TgWebAppJiraAccs({loginPath}){
         Telegram.WebApp.MainButton.enable()
         Telegram.WebApp.MainButton.setText("Add Account")
         Telegram.WebApp.MainButton.show()
+        Telegram.WebApp.onEvent('mainButtonClicked', addNewAccountTrigger)
     }, [])
 
     React.useEffect(() => {
@@ -114,7 +118,6 @@ function TgWebAppJiraAccs({loginPath}){
     }
 
     const getJiraAccountsJSX = () => {
-        Telegram.WebApp.onEvent('mainButtonClicked', addNewAccountTrigger)
         return (
             <div className="w-full flex flex-wrap flex-row">
                 <h3>Your accounts:</h3>
@@ -141,7 +144,6 @@ function TgWebAppJiraAccs({loginPath}){
     }
 
     const getEmptyJiraAccountsJsx = () => {
-        Telegram.WebApp.onEvent('mainButtonClicked', addNewAccountTrigger)
         return (
             <div style={{ color: "var(--tg-theme-text-color)" }}>
                 <h3>No one account connected...</h3>
