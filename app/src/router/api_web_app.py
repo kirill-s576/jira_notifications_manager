@@ -43,6 +43,6 @@ async def get_jira_accounts(
     )
     accounts = await service.get_jira_accounts()
     response = [
-        JiraAccountResponseModel(**account.dict()) for account in accounts
+        JiraAccountResponseModel(id=str(account.id), **account.dict(exclude={"id"})) for account in accounts
     ]
     return response
