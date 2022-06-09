@@ -33,7 +33,7 @@ function TgWebAppJiraAccs({loginPath}){
         username: null,
         language_code: null
     })
-    const [initData, setInitData] = React.useState(null)
+    const [verifiedInitData, setVerifiedInitData] = React.useState(null)
     const [jiraAccounts, setJiraAccounts] = React.useState([])
     const [errorMessage, setErrorMessage] = React.useState(null)
 
@@ -46,11 +46,11 @@ function TgWebAppJiraAccs({loginPath}){
         })
           .then(response => response.json())
           .then((data) => {
-              setInitData(unverifiedInitData)
+              setVerifiedInitData(unverifiedInitData)
               setUser(data)
           })
           .catch(error => {
-              setInitData("UNVERIFIED")
+              setVerifiedInitData("UNVERIFIED")
               setErrorMessage(`Verification Error: ${error}`)
           });
     }
@@ -100,13 +100,13 @@ function TgWebAppJiraAccs({loginPath}){
     }, [])
 
     React.useEffect(() => {
-        if (initData && initData !== "UNVERIFIED"){
-            fetchJiraAccounts(initData)
+        if (verifiedInitData && verifiedInitData !== "UNVERIFIED"){
+            fetchJiraAccounts(verifiedInitData)
         }
-    }, [initData])
+    }, [verifiedInitData])
 
     const mainButtonClickHandler = () => {
-        addNewAccountTrigger(initData)
+        addNewAccountTrigger(verifiedInitData)
     }
 
     const getErrorMessageJSX = () => {

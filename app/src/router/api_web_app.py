@@ -18,6 +18,7 @@ router = APIRouter(prefix="/web_app")
 
 @router.get(f"/verify_init_data", tags=["TelegramWebApp"], response_model=WebAppUser)
 async def verify_init_data(init_data: str):
+    logger.debug(f"verify_init_data:INIT_DATA: {init_data}")
     service = WebAppAsyncService(
         init_data=init_data,
         bot_token=APP_CONFIG.TELEGRAM_BOT_TOKEN
@@ -42,7 +43,7 @@ async def get_jira_accounts(
     """
 
     """
-
+    logger.debug(f"get_jira_account:INIT_DATA: {init_data}")
     service = WebAppAsyncService(
         init_data=init_data,
         bot_token=APP_CONFIG.TELEGRAM_BOT_TOKEN
